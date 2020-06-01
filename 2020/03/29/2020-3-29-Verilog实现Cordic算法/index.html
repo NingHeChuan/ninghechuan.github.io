@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/NingHeChuan.jpg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="-Verilog -ASIC," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Verilog实现Cordic算法任何适合产品实现的算法，都是将简易实现作为第一目标。CORDIC算法是建立在适应性滤波器、FFT、解调器等众多应用基础上白计算超越函数的方法。其核心思想是二分逐次逼近。 CORDIC（Coordinate Rotation Digital Computer）算法即坐标旋转数字计算方法，是J.D.Volder1于1959年首次提出，主要用于三角函数、双曲线、指数、对">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Verilog实现Coridc算法">
+<meta property="og:url" content="http://yoursite.com/2020/03/29/2020-3-29-Verilog%E5%AE%9E%E7%8E%B0Cordic%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="NingHeChuan">
+<meta property="og:description" content="Verilog实现Cordic算法任何适合产品实现的算法，都是将简易实现作为第一目标。CORDIC算法是建立在适应性滤波器、FFT、解调器等众多应用基础上白计算超越函数的方法。其核心思想是二分逐次逼近。 CORDIC（Coordinate Rotation Digital Computer）算法即坐标旋转数字计算方法，是J.D.Volder1于1959年首次提出，主要用于三角函数、双曲线、指数、对">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/78368772-b8bcb180-75f6-11ea-8ca9-4e188d48c11d.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/78369092-3e406180-75f7-11ea-8ed5-0e6765e2dcad.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/78369066-354f9000-75f7-11ea-95f7-9fc8a66966d2.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/78369108-41d3e880-75f7-11ea-8c41-aa38d94497aa.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/78369110-426c7f00-75f7-11ea-88ec-ce3882e1c84c.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/78369096-3e406180-75f7-11ea-8230-b043cbf59f8c.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/78369106-413b5200-75f7-11ea-89c6-89f5a2711084.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/78369077-397bad80-75f7-11ea-8446-0f7e168f84fe.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/78369089-3d0f3480-75f7-11ea-9b02-c974cd56bf89.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/78369112-439dac00-75f7-11ea-9253-0b5348835d13.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/78369115-44364280-75f7-11ea-96f7-7381665bf05d.png">
+<meta property="article:published_time" content="2020-03-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-07T12:23:42.000Z">
+<meta property="article:author" content="NingHeChuan">
+<meta property="article:tag" content="-Verilog -ASIC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/27922538/78368772-b8bcb180-75f6-11ea-8ca9-4e188d48c11d.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/29/2020-3-29-Verilog实现Cordic算法/"/>
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7479026399840953",
+    enable_page_level_ads: true
+  });
+</script>
+  <title>Verilog实现Coridc算法 | NingHeChuan</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>	
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NingHeChuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个硅农的进阶之路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7479026399840953",
+    enable_page_level_ads: true
+  });
+</script>
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/29/2020-3-29-Verilog%E5%AE%9E%E7%8E%B0Cordic%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="NingHeChuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/NingHeChuan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NingHeChuan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Verilog实现Coridc算法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		  
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-29T00:00:00+08:00">
+                2020-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ASIC/" itemprop="url" rel="index">
+                    <span itemprop="name">ASIC</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Verilog实现Cordic算法"><a href="#Verilog实现Cordic算法" class="headerlink" title="Verilog实现Cordic算法"></a>Verilog实现Cordic算法</h1><p>任何适合产品实现的算法，都是将简易实现作为第一目标。CORDIC算法是建立在适应性滤波器、FFT、解调器等众多应用基础上白计算超越函数的方法。其核心思想是二分逐次逼近。</p>
+<p>CORDIC（Coordinate Rotation Digital Computer）算法即坐标旋转数字计算方法，是J.D.Volder1于1959年首次提出，主要用于三角函数、双曲线、指数、对数的计算。该算法通过基本的加和移位运算代替乘法运算，使得矢量的旋转和定向的计算不再需要三角函数、乘法、开方、反三角、指数等函数。</p>
+<p>本文是基于使用Verilog HDL设计实现Cordic算法，实现正弦、余弦、反正切函数的实现。将复杂的运算转化成RTL擅长的加减法和乘法，而乘法运算可以用移位运算代替。Cordic算法有两种模式，旋转模式和向量模式。可以在圆坐标系、线性坐标系、双曲线坐标系使用。本文线初步实现在圆坐标系下的两种模式的算法实现。</p>
+<h3 id="Cordic算法简化"><a href="#Cordic算法简化" class="headerlink" title="Cordic算法简化"></a>Cordic算法简化</h3><p> <img src="https://user-images.githubusercontent.com/27922538/78368772-b8bcb180-75f6-11ea-8ca9-4e188d48c11d.png" alt="cordic"></p>
+<p>旋转模式，迭代位移算法。假设有一点P0（x0,y0），经过顺时针旋转角度θ，到达点Pm（xm，ym），我们根据数学运算可以得到公式如下:</p>
+<p>xm = x0cosθ - y0sinθ = cosθ(x0 – y0tanθ)</p>
+<p>ym = y0cosθ + x0sinθ = cosθ(y0 + x0tanθ)</p>
+<p>如果不考虑旋转后的向量模值，只考虑旋转角度，即去掉cosθ，得到如下方程式。得到旋转的角度的正确的，但x和y的值会增加。因为cosθ值是小于等于1的，去掉这个系数，相当于x和y的模值会增大。我们不能通过适当的数学计算去掉cosθ，但是去掉cosθ项可以方便后面的坐标平面旋转的计算。这里称为伪旋转。</p>
+<p>​    xm = x0 – y0tanθ</p>
+<p>​    ym = y0 + x0tanθ</p>
+<p>Cordic的方法核心就是伪旋转，将旋转角θ细化成若干个大小固定的角度θi，规定θi满足tanθi = 2^-i，通过一系列的迭代旋转，每次旋转θi，i为迭代次数，规定∑θi的范围即旋转角度θ的范围为[-99.7, 99.7]。如果θ的大于这个范围则可通过三角运算操作转化到该范围的角度。</p>
+<p>我们通过事先将所有每次旋转的角度计算出来，由于每次旋转的角度是固定的，所以经过i次旋转的∑θi可能会超过θ，所以就必须设置一个方向值di，如果旋转角度之和已经小于θ，则di为1，下次旋转继续为顺时针旋转，如果旋转角度之和大于θ，则di为-1，下次旋转为逆时针。设置zi+1为旋转剩余角度，zi+1 = z0 – dizi，z0 = θ，随着i值得增大，zi+1会趋向于0时，即旋转结束。di与zi的符号位相同。</p>
+<p>采用伪旋转的方法，每次提出一个cosθi，旋转结束后会产生一个∏cosθi的累乘，一旦我们确定了迭代次数，∏cosθi就是一个常数，迭代公式可写为。这是讲cosθi提出、tanθi 替换成 2^-i后的结果。di与zi的符号位相同。</p>
+<p>​    xi+1 = xi - di * yi * 2^-i</p>
+<p>​    yi+1 = yi + di * xi * 2^-i</p>
+<p>​    zi+1 = z0 - di * θi</p>
+<p>设迭代i = n - 1，那么旋转n次后得到Pm的坐标应该为（xn * ∏cosθi, yn * ∏cosθi）。应为每次迭代都会提出一个cosθi，旋转n次后的xn和yn就会少乘一个∏cosθi，所以实际上最终的Pm坐标近似于(xn * ∏cosθi, yn * ∏cosθi)。</p>
+<p>​    xn * ∏cosθi = x0cosθ - y0sinθ </p>
+<p>​    yn * ∏cosθi = y0cosθ + x0sinθ </p>
+<p>​    xn = 1/∏cosθi (x0cosθ – y0sinθ)</p>
+<p>​    yn = 1/∏cosθi (y0cosθ + x0sinθ)</p>
+<p> 伸缩因子，KN = 1 / ∏cosθi，已知迭代次数，我们可以预先计算KN的值。如下这是博主使用MATLAB计算出的迭代结果数值。</p>
+<table>
+<thead>
+<tr>
+<th>i</th>
+<th>（arctan（     ））,单位度</th>
+<th>cos</th>
+<th>Пcos</th>
+<th>1/Пcos</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>45.0</td>
+<td>0.7071067812</td>
+<td>0.7071067812</td>
+<td>1.414213562</td>
+</tr>
+<tr>
+<td>1</td>
+<td>26.56505118</td>
+<td>0.894427191</td>
+<td>0.632455532</td>
+<td>1.58113883</td>
+</tr>
+<tr>
+<td>2</td>
+<td>14.03624347</td>
+<td>0.9701425001</td>
+<td>0.6135719911</td>
+<td>1.629800601</td>
+</tr>
+<tr>
+<td>3</td>
+<td>7.125016349</td>
+<td>0.9922778767</td>
+<td>0.6088339125</td>
+<td>1.642484066</td>
+</tr>
+<tr>
+<td>4</td>
+<td>3.576334375</td>
+<td>0.9980525785</td>
+<td>0.6076482563</td>
+<td>1.645688916</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1.789910608</td>
+<td>0.9995120761</td>
+<td>0.6073517701</td>
+<td>1.646492279</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0.8951737102</td>
+<td>0.999877952</td>
+<td>0.6072776441</td>
+<td>1.646693254</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0.4476141709</td>
+<td>0.9999694838</td>
+<td>0.6072591123</td>
+<td>1.646743507</td>
+</tr>
+<tr>
+<td>8</td>
+<td>0.2238105004</td>
+<td>0.9999923707</td>
+<td>0.6072544793</td>
+<td>1.64675607</td>
+</tr>
+<tr>
+<td>9</td>
+<td>0.1119056771</td>
+<td>0.9999980927</td>
+<td>0.6072533211</td>
+<td>1.646759211</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0.05595289189</td>
+<td>0.9999995232</td>
+<td>0.6072530315</td>
+<td>1.646759996</td>
+</tr>
+<tr>
+<td>11</td>
+<td>0.02797645262</td>
+<td>0.9999998808</td>
+<td>0.6072529591</td>
+<td>1.646760193</td>
+</tr>
+<tr>
+<td>12</td>
+<td>0.01398822714</td>
+<td>0.9999999702</td>
+<td>0.607252941</td>
+<td>1.646760242</td>
+</tr>
+<tr>
+<td>13</td>
+<td>0.006994113675</td>
+<td>0.9999999925</td>
+<td>0.6072529365</td>
+<td>1.646760254</td>
+</tr>
+<tr>
+<td>14</td>
+<td>0.003497056851</td>
+<td>0.9999999981</td>
+<td>0.6072529354</td>
+<td>1.646760257</td>
+</tr>
+<tr>
+<td>15</td>
+<td>0.001748528427</td>
+<td>0.9999999995</td>
+<td>0.6072529351</td>
+<td>1.646760258</td>
+</tr>
+</tbody></table>
+<p>​    xn =KN (x0cosθ – y0sinθ)</p>
+<p>​    yn = KN (y0cosθ + x0sinθ)</p>
+<p>​    从上表可以得出，我们预先计算出KN的值，然后令x0 = ∏cosθi，y0 = 0，则上述公式可化简为</p>
+<p>​    xn = cosθ</p>
+<p>​    yn = sinθ</p>
+<p>​    即可实现正弦、余弦操作了。</p>
+<h3 id="旋转模式"><a href="#旋转模式" class="headerlink" title="旋转模式"></a>旋转模式</h3><p>​    总结一下，Cordic算法旋转模式使用Verilog HDL的实现流程</p>
+<p>（1）   确定迭代次数，将每次迭代的角度计算出来，预先定义为参数，为了避免浮点运算，将角度值向左移位16位，取整数部分。</p>
+<p>（2）   根据迭代公式进行迭代计算，本设计取16次迭代，从上表可以看出，当迭代次数越大时，1/∏cosθi会趋向于一个确定值。如果对结果精度要求更高，可以设置更高的迭代次数，根据迭代次数，可以将伸缩因子KN = 1/∏cosθi计算出来。同样将其左移16位。</p>
+<p>xi+1 = xi - di * yi * 2^-i</p>
+<p>yi+1 = yi + di * xi * 2^-i</p>
+<p>zi+1 = z0 - di * θi</p>
+<p>（3）  设置x0 = ∏cosθi，y0 = </p>
+<p>（4）  +0，则求出x16 = cosθ，y16 = sinθ。</p>
+<p>这里需要注意的是，我们在进行迭代运算的时候，将2^-i 变成移位运算，对于正余弦来说是有正负的，所以在一开始定义的时候，就应该定义成有符号数 </p>
+<p>迭代寄存器定义为有符号数，那么我们移位运算就不能用&gt;&gt;逻辑右移&lt;&lt;逻辑左移或来移位了，而是用&gt;&gt;&gt;算术右移和&lt;&lt;&lt;算术左移。逻辑左移也就相当于算数左移，右边统一添0 ，逻辑右移，左边统一添0 ，算数右移，左边添加的数和符号有关。</p>
+<p>例如1010_1010， []是添加的位</p>
+<p>逻辑左移一位：0101_010[0]</p>
+<p>算数左移一位：0101_010[0]</p>
+<p>逻辑右移一位：[0]101_0101</p>
+<p>算数右移一位：[1]101_0101</p>
+<p>迭代运算采用16级流水线，进行运算，最终需要判断输出的正余弦值在哪个象限，前面讲旋转角度θ的范围为[-99.7,99.7]，不在这个范围我们要进行三角运算使其满足这个范围，当输入的角度小于90度即可进行计算，当输入角度大于90度小于180度，将输入角度减去90度并设定当前角度处于第二象限，然后进行计算，当输入角度大于180度小于270度，将输入的角度减去180度设置当前角度处于第三象限，进行计算，当输入的角度大于270度，减去270设置当前角度处于第四象限，进行计算。象限的设定通过quarant寄存器实现。</p>
+<p>​                                </p>
+<table>
+<thead>
+<tr>
+<th>判断象限quarant</th>
+<th>象限</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>00</td>
+<td>第一象限</td>
+</tr>
+<tr>
+<td>01</td>
+<td>第二象限</td>
+</tr>
+<tr>
+<td>10</td>
+<td>第三象限</td>
+</tr>
+<tr>
+<td>11</td>
+<td>第四象限</td>
+</tr>
+</tbody></table>
+<p>最后的结果x16 = cosθ, y16 = sinθ，这里我想起了那句口诀，一全正，二正弦，三正切，四余弦</p>
+<p> 如果角度在第一象限，sin(x) = sin(a),cos(x) = sin(a)</p>
+<p> 如果角度在第二象限，sin(x) = sin(a+90) = cos(a),cos(x) = cos(a+90) = -sin(a)</p>
+<p> 如果角度在第三象限，sin(x) = sin(a+180) = -sin(a),cos(x) = cos(a+180) = -cos(a)</p>
+<p> 如果角度在第四象限，sin(x) = sin(a+270) = cos(a),cos(x) = cos(a+270) = -sin(a)</p>
+<p>​    对于正数，我们直接赋值输出，负数，这里使用有符号数表示，将其取反加1即可。最终使用modelsim对算法进行仿真，从波形图上看已经初步实现了sin，cos函数。</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/78369092-3e406180-75f7-11ea-8ed5-0e6765e2dcad.png" alt="sin-cos"></p>
+<h3 id="向量模式"><a href="#向量模式" class="headerlink" title="向量模式"></a>向量模式</h3><p>Cordic算法在向量模式下的计算方法和旋转模式基本上是类似的，设有一点P0(x0, y0),经过顺时针旋转角度到与轴重合，得到点Pm(xm, ym)，即ym = 0。</p>
+<p>​    xm = x0cosθ - y0sinθ = cosθ(x0 – y0tanθ)</p>
+<p>​    ym = y0cosθ + x0sinθ = cosθ(y0 – x0tanθ) = 0</p>
+<p>我们设置x0 = x, yo = y, zo = 0,迭代次数为16，经过16次迭代后得到zn = θ = arctan(y/x)和坐标所代表的向量的模值d = xm = xn * ∏cosθi，di与yi方向相反，即当时结束运算。实现方法为判断yi的符号位，符号位为1，di为1，符号位为0，di为-1。</p>
+<p>xi+1 = xi - di * yi * 2^-i</p>
+<p>yi+1 = yi + di * xi * 2^-i</p>
+<p>zi+1 = z0 - di * θi</p>
+<p>​    关于反正切函数，由于在[-99.7°，99.7°]范围内，所以我们输入向量P0(x0, y0)时，需要保证其在第一、四象限。</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/78369066-354f9000-75f7-11ea-95f7-9fc8a66966d2.png" alt="arctan波形"></p>
+<p>下面是使用MATLAB计算出来的数据和FPGA计算出来的数据进行比较。        </p>
+<table>
+<thead>
+<tr>
+<th>i</th>
+<th>x</th>
+<th>y</th>
+<th>arctan(y/x)  for FPGA</th>
+<th>arctan(y/x) for  MATLAB</th>
+<th>D for FPGA</th>
+<th>D for MATLAB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>100</td>
+<td>100</td>
+<td>45</td>
+<td>45.00088972</td>
+<td>121</td>
+<td>141.4213713</td>
+</tr>
+<tr>
+<td>2</td>
+<td>100</td>
+<td>200</td>
+<td>63</td>
+<td>63.43560728</td>
+<td>224</td>
+<td>223.6068216</td>
+</tr>
+<tr>
+<td>3</td>
+<td>100</td>
+<td>300</td>
+<td>71</td>
+<td>71.56616568</td>
+<td>303</td>
+<td>316.2277998</td>
+</tr>
+<tr>
+<td>4</td>
+<td>100</td>
+<td>400</td>
+<td>75</td>
+<td>75.96428023</td>
+<td>417</td>
+<td>412.3106066</td>
+</tr>
+<tr>
+<td>5</td>
+<td>100</td>
+<td>500</td>
+<td>78</td>
+<td>78.69085822</td>
+<td>512</td>
+<td>509.9020058</td>
+</tr>
+<tr>
+<td>6</td>
+<td>100</td>
+<td>600</td>
+<td>80</td>
+<td>80.5371583</td>
+<td>609</td>
+<td>608.276318</td>
+</tr>
+<tr>
+<td>7</td>
+<td>100</td>
+<td>700</td>
+<td>81</td>
+<td>81.86951648</td>
+<td>707</td>
+<td>707.1068567</td>
+</tr>
+<tr>
+<td>8</td>
+<td>100</td>
+<td>800</td>
+<td>82</td>
+<td>82.87566771</td>
+<td>806</td>
+<td>806.2258609</td>
+</tr>
+<tr>
+<td>9</td>
+<td>100</td>
+<td>900</td>
+<td>83</td>
+<td>83.65899027</td>
+<td>906</td>
+<td>905.5386105</td>
+</tr>
+<tr>
+<td>10</td>
+<td>100</td>
+<td>1000</td>
+<td>84</td>
+<td>84.28833527</td>
+<td>1009</td>
+<td>1004.987669</td>
+</tr>
+</tbody></table>
+<p>从FPGA计算出的结果与MATLAB来比较，和实际结果之间的误差还是挺小的，毕竟是硬件计算出来的数据，向量的误差就比较大了，如果对于精度比较高的计算，我们可以通过提高迭代次数来提高精度。至此基于FPGA的Cordic算法就实现结束了。附录</p>
+<p>Cordic下载程序到开发板上实验结果比较</p>
+<h2 id="旋转模式-1"><a href="#旋转模式-1" class="headerlink" title="旋转模式"></a>旋转模式</h2><p>Sin值理论数据</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/78369108-41d3e880-75f7-11ea-8c41-aa38d94497aa.png" alt="sin理论值数据"></p>
+<p>Chipscope抓取到的数据</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/78369110-426c7f00-75f7-11ea-88ec-ce3882e1c84c.png" alt="sin实际值数据"></p>
+<p>Cos值理论数据</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/78369096-3e406180-75f7-11ea-8230-b043cbf59f8c.png" alt="cos理论值数据"></p>
+<p>Chipscope抓取到的数据</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/78369106-413b5200-75f7-11ea-89c6-89f5a2711084.png" alt="cos实际值数据"></p>
+<h2 id="向量模式-1"><a href="#向量模式-1" class="headerlink" title="向量模式"></a>向量模式</h2><p>Arctan(y/x)理论数值</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/78369077-397bad80-75f7-11ea-8446-0f7e168f84fe.png" alt="Arctan理论数值"></p>
+<p>Chipscope抓取到的数据</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/78369089-3d0f3480-75f7-11ea-9b02-c974cd56bf89.png" alt="Arctan实际数值"></p>
+<p>坐标的模值的理论数据</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/78369112-439dac00-75f7-11ea-9253-0b5348835d13.png" alt="坐标模值的理论数据"></p>
+<p>Chipscope抓取到的数据</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/78369115-44364280-75f7-11ea-96f7-7381665bf05d.png" alt="坐标模值的实际数据"></p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>本题目涉及到的Verilog和MATLAB代码等资料，都已上传到本订阅号付费知识星球 <strong>硅农小灶</strong>。订阅号后台回复“<strong>无线通信基础</strong>”即可获得进入知识星球的方法。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/硅农.jpg" alt="NingHeChuan wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="NingHeChuan 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="NingHeChuan 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Verilog-ASIC/" rel="tag"><i class="fa fa-tag"></i> -Verilog -ASIC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/29/2020-4-7-%E5%81%9A%E4%B8%80%E9%A2%97%E8%8A%AF%E7%89%87%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E8%B4%B5/" rel="next" title="做一颗芯片为什么这么贵？">
+                <i class="fa fa-chevron-left"></i> 做一颗芯片为什么这么贵？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/28/2020-4-28-%E7%A1%85%E5%86%9C%E5%86%B7%E7%9F%A5%E8%AF%86%E7%AC%AC%E4%B8%80%E6%9C%9F/" rel="prev" title="硅农冷知识第一期">
+                硅农冷知识第一期 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/NingHeChuan.jpg"
+                alt="NingHeChuan" />
+            
+              <p class="site-author-name" itemprop="name">NingHeChuan</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/NingHeChuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ninghechuan@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/ninghechuan/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-custom zhihu"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/ninghechuan" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/ninghechuan" title="NingHeChuan博客园" target="_blank">NingHeChuan博客园</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://exasic.com/" title="ExASIC" target="_blank">ExASIC</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.unisoc.com/cn" title="紫光展锐" target="_blank">紫光展锐</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Verilog实现Cordic算法"><span class="nav-number">1.</span> <span class="nav-text">Verilog实现Cordic算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cordic算法简化"><span class="nav-number">1.0.1.</span> <span class="nav-text">Cordic算法简化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#旋转模式"><span class="nav-number">1.0.2.</span> <span class="nav-text">旋转模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#向量模式"><span class="nav-number">1.0.3.</span> <span class="nav-text">向量模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#旋转模式-1"><span class="nav-number">1.1.</span> <span class="nav-text">旋转模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向量模式-1"><span class="nav-number">1.2.</span> <span class="nav-text">向量模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">1.3.</span> <span class="nav-text">最后</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">NingHeChuan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

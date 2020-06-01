@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/NingHeChuan.jpg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="-Scala -ASIC," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这个语言可能会革了Verilog HDL的命？将SpinalHDL和Verilog进行比较，类比成，汇编语言和C语言比较，我倒觉得应该用C语言和Python来比较。汇编语言过于老以致于应该用手动画电路图和汇编语言比较。人生苦短，快用SpinalHDL。 SpinalHDL的文档已经很完善了 https:&#x2F;&#x2F;spinalhdl.github.io&#x2F;SpinalDoc-RTD&#x2F;index.html 环">
+<meta property="og:type" content="article">
+<meta property="og:title" content="这个语言可能会革了Verilog HDL的命？">
+<meta property="og:url" content="http://yoursite.com/2020/05/08/2020-5-9-SpinalHDL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="NingHeChuan">
+<meta property="og:description" content="这个语言可能会革了Verilog HDL的命？将SpinalHDL和Verilog进行比较，类比成，汇编语言和C语言比较，我倒觉得应该用C语言和Python来比较。汇编语言过于老以致于应该用手动画电路图和汇编语言比较。人生苦短，快用SpinalHDL。 SpinalHDL的文档已经很完善了 https:&#x2F;&#x2F;spinalhdl.github.io&#x2F;SpinalDoc-RTD&#x2F;index.html 环">
+<meta property="article:published_time" content="2020-05-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-10T09:56:47.000Z">
+<meta property="article:author" content="NingHeChuan">
+<meta property="article:tag" content="-Scala -ASIC">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/05/08/2020-5-9-SpinalHDL学习笔记/"/>
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7479026399840953",
+    enable_page_level_ads: true
+  });
+</script>
+  <title>这个语言可能会革了Verilog HDL的命？ | NingHeChuan</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>	
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NingHeChuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个硅农的进阶之路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7479026399840953",
+    enable_page_level_ads: true
+  });
+</script>
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/08/2020-5-9-SpinalHDL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="NingHeChuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/NingHeChuan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NingHeChuan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">这个语言可能会革了Verilog HDL的命？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		  
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-08T00:00:00+08:00">
+                2020-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ASIC/" itemprop="url" rel="index">
+                    <span itemprop="name">ASIC</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="这个语言可能会革了Verilog-HDL的命？"><a href="#这个语言可能会革了Verilog-HDL的命？" class="headerlink" title="这个语言可能会革了Verilog HDL的命？"></a>这个语言可能会革了Verilog HDL的命？</h1><p>将SpinalHDL和Verilog进行比较，类比成，汇编语言和C语言比较，我倒觉得应该用C语言和Python来比较。汇编语言过于老以致于应该用手动画电路图和汇编语言比较。人生苦短，快用SpinalHDL。</p>
+<p>SpinalHDL的文档已经很完善了</p>
+<p><a href="https://spinalhdl.github.io/SpinalDoc-RTD/index.html" target="_blank" rel="noopener">https://spinalhdl.github.io/SpinalDoc-RTD/index.html</a></p>
+<h3 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h3><p>SpinalHDL是一个用Scala编写的硬件描述语言，需要Java虚拟机（JVM）环境</p>
+<h4 id="安装Java-JDK"><a href="#安装Java-JDK" class="headerlink" title="安装Java JDK"></a>安装Java JDK</h4><p>官网<a href="https://www.oracle.com/java/technologies/javase-jdk8-downloads.html" target="_blank" rel="noopener">https://www.oracle.com/java/technologies/javase-jdk8-downloads.html</a></p>
+<p>直接用下载<a href="https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_windows-x64_bin.zip" target="_blank" rel="noopener">https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_windows-x64_bin.zip</a></p>
+<p>解压下载的文件你想指定的安装目录</p>
+<p>配置环境变量</p>
+<p>然后按Win+R键，输入cmd，在cmd窗口输入java -version，安装成功提示如下。</p>
+<h4 id="安装IntelliJ-IDEA"><a href="#安装IntelliJ-IDEA" class="headerlink" title="安装IntelliJ IDEA"></a>安装IntelliJ IDEA</h4><p><a href="https://scala-lang.org/download/" target="_blank" rel="noopener">https://scala-lang.org/download/</a></p>
+<p><a href="https://www.scala-sbt.org/download.html" target="_blank" rel="noopener">https://www.scala-sbt.org/download.html</a></p>
+<p>安装好Scala</p>
+<p>安装好IntelliJ IDE</p>
+<p>下载一个简单的demo</p>
+<p><a href="https://codeload.github.com/SpinalHDL/SpinalTemplateSbt/zip/master" target="_blank" rel="noopener">https://codeload.github.com/SpinalHDL/SpinalTemplateSbt/zip/master</a></p>
+<p>打开IntelliJ IDEA，打开工程</p>
+<p>配置Java JDK和Scala环境，Java JDK一般会自动加载，Scala需要手动指定到相关目录</p>
+<p>加载插件教程</p>
+<p><a href="https://www.jetbrains.com/help/idea/2016.1/enabling-and-disabling-plugins.html?origin=old_help" target="_blank" rel="noopener">https://www.jetbrains.com/help/idea/2016.1/enabling-and-disabling-plugins.html?origin=old_help</a></p>
+<p>打开工程需要加载很多库文件和配置。</p>
+<h3 id="运行第一个demo"><a href="#运行第一个demo" class="headerlink" title="运行第一个demo"></a>运行第一个demo</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> mylib</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> spinal.core._</span><br><span class="line"><span class="keyword">import</span> spinal.lib._</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> scala.util.<span class="type">Random</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Hardware definition</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTopLevel</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  	<span class="keyword">val</span> io = <span class="keyword">new</span> <span class="type">Bundle</span> &#123;</span><br><span class="line">    <span class="keyword">val</span> cond0 = in  <span class="type">Bool</span></span><br><span class="line">    <span class="keyword">val</span> cond1 = in  <span class="type">Bool</span></span><br><span class="line">    <span class="keyword">val</span> flag  = out <span class="type">Bool</span></span><br><span class="line">    <span class="keyword">val</span> state = out <span class="type">UInt</span>(<span class="number">8</span> bits)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">val</span> counter = <span class="type">Reg</span>(<span class="type">UInt</span>(<span class="number">8</span> bits)) init(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  when(io.cond0)&#123;</span><br><span class="line">    counter := counter + <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  io.state := counter</span><br><span class="line">  io.flag  := (counter === <span class="number">0</span>) | io.cond1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Generate the MyTopLevel's Verilog</span></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">MyTopLevelVerilog</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span><br><span class="line">    <span class="type">SpinalVerilog</span>(<span class="keyword">new</span> <span class="type">MyTopLevel</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Generate the MyTopLevel's VHDL</span></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">MyTopLevelVhdl</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span><br><span class="line">    <span class="type">SpinalVhdl</span>(<span class="keyword">new</span> <span class="type">MyTopLevel</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//Define a custom SpinalHDL configuration with synchronous reset instead of the default asynchronous one. This configuration can be resued everywhere</span></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">MySpinalConfig</span> <span class="keyword">extends</span> <span class="title">SpinalConfig</span>(<span class="params">defaultConfigForClockDomains = <span class="type">ClockDomainConfig</span>(resetKind = <span class="type">SYNC</span></span>))</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">//Generate</span> <span class="title">the</span> <span class="title">MyTopLevel</span>'<span class="title">s</span> <span class="title">Verilog</span> <span class="title">using</span> <span class="title">the</span> <span class="title">above</span> <span class="title">custom</span> <span class="title">configuration</span>.</span></span><br><span class="line"><span class="class"><span class="title">object</span> <span class="title">MyTopLevelVerilogWithCustomConfig</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span><br><span class="line">    <span class="type">MySpinalConfig</span>.generateVerilog(<span class="keyword">new</span> <span class="type">MyTopLevel</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>点击运行生成的Verilog代码</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> MyTopLevel (</span><br><span class="line">  <span class="keyword">input</span>               io_cond0,</span><br><span class="line">  <span class="keyword">input</span>               io_cond1,</span><br><span class="line">  <span class="keyword">output</span>              io_flag,</span><br><span class="line">  <span class="keyword">output</span>     [<span class="number">7</span>:<span class="number">0</span>]    io_state,</span><br><span class="line">  <span class="keyword">input</span>               clk,</span><br><span class="line">  <span class="keyword">input</span>               reset </span><br><span class="line">);</span><br><span class="line">  <span class="keyword">reg</span>        [<span class="number">7</span>:<span class="number">0</span>]    counter;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">assign</span> io_state = counter;</span><br><span class="line">  <span class="keyword">assign</span> io_flag = ((counter == <span class="number">8'h0</span>) || io_cond1);</span><br><span class="line">  <span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">      counter &lt;= <span class="number">8'h0</span>;</span><br><span class="line">    <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">      <span class="keyword">if</span>(io_cond0)<span class="keyword">begin</span></span><br><span class="line">        counter &lt;= (counter + <span class="number">8'h01</span>);</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><h4 id="变量（Variables）关键词var"><a href="#变量（Variables）关键词var" class="headerlink" title="变量（Variables）关键词var"></a>变量（Variables）关键词var</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> number : <span class="type">Int</span> = <span class="number">0</span></span><br><span class="line">number = <span class="number">6</span></span><br><span class="line">number += <span class="number">4</span></span><br><span class="line">println(number)<span class="comment">//10</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> number = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> two = <span class="number">2</span></span><br><span class="line"><span class="keyword">var</span> three = <span class="number">3</span></span><br><span class="line"><span class="keyword">var</span> six = two * three</span><br></pre></td></tr></table></figure>
+
+<h4 id="函数（Function）"><a href="#函数（Function）" class="headerlink" title="函数（Function）"></a>函数（Function）</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sumBiggerThanZero</span></span>(a: <span class="type">Float</span>, b: <span class="type">Float</span>): <span class="type">Boolean</span> = &#123;</span><br><span class="line">  <span class="keyword">return</span> (a + b) &gt; <span class="number">0</span></span><br><span class="line">    <span class="comment">//(a + b) &gt; 0 //return可以省略</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sumBiggerThanZero</span></span>(a: <span class="type">Float</span>, b: <span class="type">Float</span>) = (a + b) &gt; <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sumBiggerThanZero</span></span>(a: <span class="type">Float</span>, b: <span class="type">Float</span> = <span class="number">0.0</span>f) = &#123;</span><br><span class="line">  (a + b) &gt; <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个函数表示，当a + b &gt; 0时范围值为ture。需要调用这个函数时：</p>
+ <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sumBiggerThanZero(<span class="number">2.3</span>f, <span class="number">5.4</span>f)</span><br><span class="line"></span><br><span class="line">sumBiggerThanZero(</span><br><span class="line">  a = <span class="number">2.3</span>f,</span><br><span class="line">  b = <span class="number">5.4</span>f</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>不想返回任何值，设定返回值为Unit</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printer</span></span>(): <span class="type">Unit</span> = &#123;</span><br><span class="line">  println(<span class="string">"1234"</span>)</span><br><span class="line">  println(<span class="string">"5678"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Apply"><a href="#Apply" class="headerlink" title="Apply"></a>Apply</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Array</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">apply</span></span>(index: <span class="type">Int</span>): <span class="type">Int</span> = index + <span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> array = <span class="keyword">new</span> <span class="type">Array</span>()</span><br><span class="line"><span class="keyword">val</span> value = array(<span class="number">4</span>)   <span class="comment">//array(4) is interpreted as array.apply(4) and will return 7</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">MajorityVote</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">apply</span></span>(value: <span class="type">Int</span>): <span class="type">Int</span> = ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> value = <span class="type">MajorityVote</span>(<span class="number">4</span>) <span class="comment">// Will call MajorityVote.apply(4)</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h3><p>面向对象编程</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">MathUtils</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">pow2</span></span>(value: <span class="type">Float</span>): <span class="type">Float</span> = value*value</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">MathUtils</span>.pow2(<span class="number">42.0</span>f)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Color</span>(<span class="params">r: <span class="type">Float</span>, g: <span class="type">Float</span>, b: <span class="type">Float</span></span>)</span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">getGrayLevel</span></span>(): <span class="type">Float</span> = r * <span class="number">0.3</span>f + g * <span class="number">0.4</span>f + b *<span class="number">0.4</span>f</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> blue = <span class="keyword">new</span> <span class="type">Color</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line"><span class="keyword">val</span> grayLevelOfBlue = blue.getGrayLevel()</span><br></pre></td></tr></table></figure>
+
+<p>如果需要直接对变量赋值，需要定义var</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Color</span>(<span class="params">val r: <span class="type">Float</span>, val g: <span class="type">Float</span>, val b: <span class="type">Float</span></span>)</span>&#123; ... &#125;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">val</span> blue = <span class="keyword">new</span> <span class="type">Color</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line"><span class="keyword">val</span> redLevelOfBlue = blue.r</span><br></pre></td></tr></table></figure>
+
+<h3 id="Inheritance"><a href="#Inheritance" class="headerlink" title="Inheritance"></a>Inheritance</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Shape</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">getArea</span></span>(): <span class="type">Float</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Square</span>(<span class="params">sideLength: <span class="type">Float</span></span>) <span class="keyword">extends</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">getArea</span></span>() = sideLength * sideLength</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span>(<span class="params">width: <span class="type">Float</span>, height: <span class="type">Float</span></span>) <span class="keyword">extends</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">getArea</span></span>() = width * height</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span>(<span class="params">width: <span class="type">Float</span>, height: <span class="type">Float</span></span>) <span class="keyword">extends</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">getArea</span></span>() = width * height</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="instances"><a href="#instances" class="headerlink" title="instances"></a>instances</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> fifo   = <span class="keyword">new</span> <span class="type">Fifo</span>()</span><br><span class="line"><span class="keyword">val</span> buffer = <span class="type">Reg</span>(<span class="type">Bits</span>(<span class="number">8</span> bits))</span><br></pre></td></tr></table></figure>
+
+<h3 id="if-when"><a href="#if-when" class="headerlink" title="if / when"></a>if / when</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(cond)&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span>(cond)&#123;</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">when(cond)&#123;</span><br><span class="line"></span><br><span class="line">&#125;.elseWhen(cond)&#123;</span><br><span class="line"></span><br><span class="line">&#125;.otherwise&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">switch(value)&#123;</span><br><span class="line">  is(key)&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  is(key)&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">default</span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Parameters"><a href="#Parameters" class="headerlink" title="Parameters"></a>Parameters</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">RgbConfig</span>(<span class="params">rWidth: <span class="type">Int</span>, gWidth: <span class="type">Int</span>, bWidth: <span class="type">Int</span></span>)</span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">getWidth</span> </span>= rWidth + gWidth + bWidth</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">Rgb</span>(<span class="params">c: <span class="type">RgbConfig</span></span>) <span class="keyword">extends</span> <span class="title">Bundle</span> </span>&#123;</span><br><span class="line">  <span class="keyword">val</span> r = <span class="type">UInt</span>(c.rWidth bit)</span><br><span class="line">  <span class="keyword">val</span> g = <span class="type">UInt</span>(c.gWidth bit)</span><br><span class="line">  <span class="keyword">val</span> b = <span class="type">UInt</span>(c.bWidth bit)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="RGB-example"><a href="#RGB-example" class="headerlink" title="RGB example"></a>RGB example</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">Rgb</span>(<span class="params">rWidth: <span class="type">Int</span>, gWidth: <span class="type">Int</span>, bWidth: <span class="type">Int</span></span>) <span class="keyword">extends</span> <span class="title">Bundle</span> </span>&#123;</span><br><span class="line">  <span class="keyword">val</span> r = <span class="type">UInt</span>(rWidth bits)</span><br><span class="line">  <span class="keyword">val</span> g = <span class="type">UInt</span>(gWidth bits)</span><br><span class="line">  <span class="keyword">val</span> b = <span class="type">UInt</span>(bWidth bits)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myRgbSignal = <span class="type">Rgb</span>(<span class="number">5</span>, <span class="number">6</span>, <span class="number">5</span>)<span class="comment">//16bit的一个rgb信号</span></span><br><span class="line"><span class="keyword">val</span> myRgbCloned = cloneOf(myRgbSignal)<span class="comment">//将这个变量赋值</span></span><br></pre></td></tr></table></figure>
+
+<p>还可以再定义为函数</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Define a type factory function</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">myRgbTypeDef</span> </span>= <span class="type">Rgb</span>(<span class="number">5</span>, <span class="number">6</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//Use that type factory to create a Rgb signal</span></span><br><span class="line"><span class="keyword">val</span> myRgbFromTypeDef = myRgbTypeDef</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="SpinalHDL-与Verilog-HDL比较"><a href="#SpinalHDL-与Verilog-HDL比较" class="headerlink" title="SpinalHDL 与Verilog HDL比较"></a>SpinalHDL 与Verilog HDL比较</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">reg</span> mySignal;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>] myRegister;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>] myRegisterWithReset;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(*)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(cond)</span><br><span class="line">		mySignal = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        mySignal = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(cond)</span><br><span class="line">       myRegister &lt;= myRegister + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(reset)</span><br><span class="line">        myRegisterWithReset &lt;= <span class="number">4'd0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(cond)</span><br><span class="line">        myRegisterWithReset &lt;= myRegisterWithReset + <span class="number">1'd1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>用Spinal HDL描述</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> mySignal = <span class="type">Bool</span></span><br><span class="line"><span class="keyword">val</span> myRegister = <span class="type">Reg</span>(<span class="type">UInt</span>(<span class="number">4</span> bits))</span><br><span class="line"><span class="keyword">val</span> myRegisterWithReset = <span class="type">Reg</span>(<span class="type">UInt</span>(<span class="number">4</span> bits)) init(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">mySignal := <span class="type">False</span></span><br><span class="line">when(cond) &#123;</span><br><span class="line">  mySignal := <span class="type">True</span></span><br><span class="line">  myRegister := myRegister + <span class="number">1</span></span><br><span class="line">  myRegisterWithReset := myRegisterWithReset + <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Verilog中定义一个reg变量，你不行确定它是会用于组合逻辑还是寄存器存储，但是再Spinal HDL中它是固定的。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> coreClockDomain = <span class="type">ClockDomain</span>(</span><br><span class="line">  clock = io.coreClk,</span><br><span class="line">  reset = io.coreReset,</span><br><span class="line">  config = <span class="type">ClockDomainConfig</span>(</span><br><span class="line">    clockEdge = <span class="type">RISING</span>,</span><br><span class="line">    resetKind = <span class="type">ASYNC</span>,</span><br><span class="line">    resetActiveLevel = <span class="type">HIGH</span></span><br><span class="line">  )</span><br><span class="line">)</span><br><span class="line"><span class="keyword">val</span> coreArea = <span class="keyword">new</span> <span class="type">ClockingArea</span>(coreClockDomain) &#123;</span><br><span class="line">  <span class="keyword">val</span> myCoreClockedRegister = <span class="type">Reg</span>(<span class="type">UInt</span>(<span class="number">4</span> bit))</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="comment">// coreClockDomain will also be applied to all sub components instantiated in the Area</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在Verilog中所有的寄存器都需要将时钟和复位信号连接起来，在Spinal中可以直接定义一个时钟域，在这个时钟域中所有的变量都适用</p>
+<h3 id="Safety"><a href="#Safety" class="headerlink" title="Safety"></a>Safety</h3><p>在Verilog中组合逻辑容易生成组合逻辑环和锁存器，然后需要lint工具检查，但这些工具一般都是收费的。但是Spinal在进行代码生成时会自动检查，保证生成的代码是没有lint错误的，还有跨时钟域问题，而且编译器还是完全免费的。</p>
+<h3 id="总线接口"><a href="#总线接口" class="headerlink" title="总线接口"></a>总线接口</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> <span class="type">P</span> = slave(<span class="type">Apb3</span>(addressWidth, dataWidth))</span><br></pre></td></tr></table></figure>
+
+<p>面向对象编程</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> coreConfig = <span class="type">CoreConfig</span>(</span><br><span class="line">  pcWidth = <span class="number">32</span>,</span><br><span class="line">  addrWidth = <span class="number">32</span>,</span><br><span class="line">  startAddress = <span class="number">0x00000000</span>,</span><br><span class="line">  regFileReadyKind = sync,</span><br><span class="line">  branchPrediction = dynamic,</span><br><span class="line">  bypassExecute0 = <span class="literal">true</span>,</span><br><span class="line">  bypassExecute1 = <span class="literal">true</span>,</span><br><span class="line">  bypassWriteBack = <span class="literal">true</span>,</span><br><span class="line">  bypassWriteBackBuffer = <span class="literal">true</span>,</span><br><span class="line">  collapseBubble = <span class="literal">false</span>,</span><br><span class="line">  fastFetchCmdPcCalculation = <span class="literal">true</span>,</span><br><span class="line">  dynamicBranchPredictorCacheSizeLog2 = <span class="number">7</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">//The CPU has a system of plugins which allows adding new features into the core.</span></span><br><span class="line"><span class="comment">//Those extensions are not directly implemented into the core, but are kind of an additive logic patch defined in a separated area.</span></span><br><span class="line">coreConfig.add(<span class="keyword">new</span> <span class="type">MulExtension</span>)</span><br><span class="line">coreConfig.add(<span class="keyword">new</span> <span class="type">DivExtension</span>)</span><br><span class="line">coreConfig.add(<span class="keyword">new</span> <span class="type">BarrelShifterFullExtension</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> iCacheConfig = <span class="type">InstructionCacheConfig</span>(</span><br><span class="line">  cacheSize =<span class="number">4096</span>,</span><br><span class="line">  bytePerLine =<span class="number">32</span>,</span><br><span class="line">  wayCount = <span class="number">1</span>,  <span class="comment">//Can only be one for the moment</span></span><br><span class="line">  wrappedMemAccess = <span class="literal">true</span>,</span><br><span class="line">  addressWidth = <span class="number">32</span>,</span><br><span class="line">  cpuDataWidth = <span class="number">32</span>,</span><br><span class="line">  memDataWidth = <span class="number">32</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="type">RiscvCoreAxi4</span>(</span><br><span class="line">  coreConfig = coreConfig,</span><br><span class="line">  iCacheConfig = iCacheConfig,</span><br><span class="line">  dCacheConfig = <span class="literal">null</span>,</span><br><span class="line">  debug = debug,</span><br><span class="line">  interruptCount = interruptCount</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="实例化"><a href="#实例化" class="headerlink" title="实例化"></a>实例化</h3><p>Spinal实例化非常简单</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> divider = <span class="keyword">new</span> <span class="type">UnsignedDivider</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">//And then if you want to access IO signals of that divider:</span></span><br><span class="line">divider.io.cmd.valid := <span class="type">True</span></span><br><span class="line">divider.io.cmd.numerator := <span class="number">42</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="FSM状态机"><a href="#FSM状态机" class="headerlink" title="FSM状态机"></a>FSM状态机</h3><h4 id="Assignements"><a href="#Assignements" class="headerlink" title="Assignements"></a>Assignements</h4><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">7</span>:<span class="number">0</span>] myUInt;</span><br><span class="line"><span class="keyword">assign</span> myUInt = <span class="number">7'd6</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> myUInt = <span class="type">UInt</span>(<span class="number">8</span> bits)</span><br><span class="line">myUInt := <span class="number">6</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> clear   = <span class="type">Bool</span></span><br><span class="line"><span class="keyword">val</span> counter = <span class="type">Reg</span>(<span class="type">UInt</span>(<span class="number">8</span> bits))</span><br><span class="line"></span><br><span class="line">when(clear)&#123;</span><br><span class="line">  counter := <span class="number">0</span></span><br><span class="line">&#125;.elsewhen(counter === <span class="number">76</span>)&#123;</span><br><span class="line">  counter := <span class="number">79</span></span><br><span class="line">&#125;.otherwise&#123;</span><br><span class="line">  counter(<span class="number">7</span>) := ! counter(<span class="number">7</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">switch(counter)&#123;</span><br><span class="line">  is(<span class="number">42</span>)&#123;</span><br><span class="line">    counter := <span class="number">65</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">default</span>&#123;</span><br><span class="line">    counter := counter + <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Registers"><a href="#Registers" class="headerlink" title="Registers"></a>Registers</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> counter = <span class="type">Reg</span>(<span class="type">UInt</span>(<span class="number">8</span> bits))  init(<span class="number">0</span>)</span><br><span class="line">counter := counter + <span class="number">1</span>   <span class="comment">//Count up each cycle</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//init(0) means that the register should be initialized to zero when a reset occurs</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> myBits  = <span class="type">Bits</span>(<span class="number">8</span> bits)</span><br><span class="line"><span class="keyword">val</span> itMatch = myBits === <span class="type">M</span><span class="string">"00--10--"</span> <span class="comment">// - don't care value</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/硅农.jpg" alt="NingHeChuan wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="NingHeChuan 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="NingHeChuan 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Scala-ASIC/" rel="tag"><i class="fa fa-tag"></i> -Scala -ASIC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/28/2020-4-28-%E4%B8%87%E7%89%A9%E5%9F%BA%E4%BA%8E%E7%8A%B6%E6%80%81%E6%9C%BA%E2%80%94%E2%80%94%E7%8A%B6%E6%80%81%E6%9C%BA%E5%A4%A7%E6%B3%95%E5%A5%BD/" rel="next" title="万物基于状态机——状态机大法好">
+                <i class="fa fa-chevron-left"></i> 万物基于状态机——状态机大法好
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/11/2020-5-11-%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84Verilog%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC%E6%98%AF%E5%A5%BD%E7%9A%84%E9%A3%8E%E6%A0%BC%EF%BC%9F/" rel="prev" title="什么样的Verilog代码风格是好的风格？">
+                什么样的Verilog代码风格是好的风格？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/NingHeChuan.jpg"
+                alt="NingHeChuan" />
+            
+              <p class="site-author-name" itemprop="name">NingHeChuan</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/NingHeChuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ninghechuan@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/ninghechuan/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-custom zhihu"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/ninghechuan" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/ninghechuan" title="NingHeChuan博客园" target="_blank">NingHeChuan博客园</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://exasic.com/" title="ExASIC" target="_blank">ExASIC</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.unisoc.com/cn" title="紫光展锐" target="_blank">紫光展锐</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#这个语言可能会革了Verilog-HDL的命？"><span class="nav-number">1.</span> <span class="nav-text">这个语言可能会革了Verilog HDL的命？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境安装"><span class="nav-number">1.0.1.</span> <span class="nav-text">环境安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Java-JDK"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">安装Java JDK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装IntelliJ-IDEA"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">安装IntelliJ IDEA</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行第一个demo"><span class="nav-number">1.0.2.</span> <span class="nav-text">运行第一个demo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">1.0.3.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量（Variables）关键词var"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">变量（Variables）关键词var</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数（Function）"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">函数（Function）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Apply"><span class="nav-number">1.0.4.</span> <span class="nav-text">Apply</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object"><span class="nav-number">1.0.5.</span> <span class="nav-text">Object</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class"><span class="nav-number">1.0.6.</span> <span class="nav-text">Class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inheritance"><span class="nav-number">1.0.7.</span> <span class="nav-text">Inheritance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#instances"><span class="nav-number">1.0.8.</span> <span class="nav-text">instances</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if-when"><span class="nav-number">1.0.9.</span> <span class="nav-text">if &#x2F; when</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#switch"><span class="nav-number">1.0.10.</span> <span class="nav-text">switch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parameters"><span class="nav-number">1.0.11.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RGB-example"><span class="nav-number">1.0.12.</span> <span class="nav-text">RGB example</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpinalHDL-与Verilog-HDL比较"><span class="nav-number">1.0.13.</span> <span class="nav-text">SpinalHDL 与Verilog HDL比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Safety"><span class="nav-number">1.0.14.</span> <span class="nav-text">Safety</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总线接口"><span class="nav-number">1.0.15.</span> <span class="nav-text">总线接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例化"><span class="nav-number">1.0.16.</span> <span class="nav-text">实例化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FSM状态机"><span class="nav-number">1.0.17.</span> <span class="nav-text">FSM状态机</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Assignements"><span class="nav-number">1.0.17.1.</span> <span class="nav-text">Assignements</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Registers"><span class="nav-number">1.0.18.</span> <span class="nav-text">Registers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据类型"><span class="nav-number">1.0.19.</span> <span class="nav-text">数据类型</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">NingHeChuan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/NingHeChuan.jpg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="-Verilog -ASIC," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="万物基于状态机——状态机大法好学习Verilog的五个阶段 00：心中无电路，代码无电路 01：心中有电路，代码无电路 10：心中有电路，代码有电路 11：心中无电路，代码有电路 00：心中无电路，代码无电路 经过多少次将写好的电路推到重构，经过多少次否定之否定的哲学沉思。终于明白一切数字逻辑不都可以归一化为一个有限状态机吗？00—01—10—11—00这不也是一个状态循环么！ 万物基于状态机我们">
+<meta property="og:type" content="article">
+<meta property="og:title" content="万物基于状态机——状态机大法好">
+<meta property="og:url" content="http://yoursite.com/2020/04/28/2020-4-28-%E4%B8%87%E7%89%A9%E5%9F%BA%E4%BA%8E%E7%8A%B6%E6%80%81%E6%9C%BA%E2%80%94%E2%80%94%E7%8A%B6%E6%80%81%E6%9C%BA%E5%A4%A7%E6%B3%95%E5%A5%BD/index.html">
+<meta property="og:site_name" content="NingHeChuan">
+<meta property="og:description" content="万物基于状态机——状态机大法好学习Verilog的五个阶段 00：心中无电路，代码无电路 01：心中有电路，代码无电路 10：心中有电路，代码有电路 11：心中无电路，代码有电路 00：心中无电路，代码无电路 经过多少次将写好的电路推到重构，经过多少次否定之否定的哲学沉思。终于明白一切数字逻辑不都可以归一化为一个有限状态机吗？00—01—10—11—00这不也是一个状态循环么！ 万物基于状态机我们">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/80788690-67372080-8bbc-11ea-997b-dd4515742033.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/80788680-64d4c680-8bbc-11ea-98d4-04f6dc057325.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/80789099-95693000-8bbd-11ea-9f0e-f94bef9ad842.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/80788688-669e8a00-8bbc-11ea-83fe-8ad9c1ec62e3.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/80790282-0231f980-8bc1-11ea-8ea6-709dabdc58f8.png">
+<meta property="article:published_time" content="2020-04-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-01T08:13:32.000Z">
+<meta property="article:author" content="NingHeChuan">
+<meta property="article:tag" content="-Verilog -ASIC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/27922538/80788690-67372080-8bbc-11ea-997b-dd4515742033.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/28/2020-4-28-万物基于状态机——状态机大法好/"/>
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7479026399840953",
+    enable_page_level_ads: true
+  });
+</script>
+  <title>万物基于状态机——状态机大法好 | NingHeChuan</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>	
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NingHeChuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个硅农的进阶之路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7479026399840953",
+    enable_page_level_ads: true
+  });
+</script>
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/28/2020-4-28-%E4%B8%87%E7%89%A9%E5%9F%BA%E4%BA%8E%E7%8A%B6%E6%80%81%E6%9C%BA%E2%80%94%E2%80%94%E7%8A%B6%E6%80%81%E6%9C%BA%E5%A4%A7%E6%B3%95%E5%A5%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="NingHeChuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/NingHeChuan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NingHeChuan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">万物基于状态机——状态机大法好</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		  
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-28T00:00:00+08:00">
+                2020-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ASIC/" itemprop="url" rel="index">
+                    <span itemprop="name">ASIC</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="万物基于状态机——状态机大法好"><a href="#万物基于状态机——状态机大法好" class="headerlink" title="万物基于状态机——状态机大法好"></a>万物基于状态机——状态机大法好</h1><p>学习Verilog的五个阶段</p>
+<p>00：心中无电路，代码无电路</p>
+<p>01：心中有电路，代码无电路</p>
+<p>10：心中有电路，代码有电路</p>
+<p>11：心中无电路，代码有电路</p>
+<p>00：心中无电路，代码无电路</p>
+<p>经过多少次将写好的电路推到重构，经过多少次否定之否定的哲学沉思。终于明白一切数字逻辑不都可以归一化为一个有限状态机吗？00—01—10—11—00这不也是一个状态循环么！</p>
+<h3 id="万物基于状态机"><a href="#万物基于状态机" class="headerlink" title="万物基于状态机"></a>万物基于状态机</h3><p>我们知道所有的数字电路都可以抽象为组合逻辑+时序逻辑，任何时序逻辑都可以通过有限状态机描述，即使是组合逻辑也可以描述成单个状态的状态机。</p>
+<p>上图：</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/80788690-67372080-8bbc-11ea-997b-dd4515742033.png" alt="状态机抽象"></p>
+<p>是不是看着很眼熟，变换一下</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/80788680-64d4c680-8bbc-11ea-98d4-04f6dc057325.png" alt="数字逻辑抽象"></p>
+<p>任何算法计算或逻辑过程都可以简化为一坨组合逻辑云，然后再加一个D触发器打拍输出。常见的三段式状态机，第二段组合逻辑状态转移，再加时序逻辑保存当前状态，所以任何的数字逻辑在理论上都可以描述为状态机，万物基于状态机。</p>
+<p>当然，要是写一个计数器都准备写成状态机那就，，就是徒增功耗而已。</p>
+<h3 id="三段式状态机"><a href="#三段式状态机" class="headerlink" title="三段式状态机"></a>三段式状态机</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第一段</span></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> rst_n)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(!rst_n)</span><br><span class="line">        pre_state[<span class="number">2</span>:<span class="number">0</span>] &lt;= IDLE;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        pre_state[<span class="number">2</span>:<span class="number">0</span>] &lt;= next_state;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">//第二段</span></span><br><span class="line"><span class="keyword">always</span> @(*)<span class="keyword">begin</span></span><br><span class="line">        next_state[<span class="number">2</span>:<span class="number">0</span>] = pre_state;</span><br><span class="line">        <span class="keyword">case</span>(pre_state)</span><br><span class="line">        IDLE:<span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">if</span>(init_end)</span><br><span class="line">                next_state = ARBIT;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        ARBIT:<span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">if</span>(ref_en)</span><br><span class="line">                next_state = A_REF;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(wr_en)</span><br><span class="line">                next_state = WRITE;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(rd_en)</span><br><span class="line">                next_state = READ;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        A_REF:<span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">if</span>(ref_end)</span><br><span class="line">                next_state = ARBIT;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        WRITE:<span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">if</span>(wr_end)</span><br><span class="line">                next_state = ARBIT;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        READ:<span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">if</span>(rd_end)</span><br><span class="line">                next_state = ARBIT;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">default</span>: next_state = IDLE;</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">//第三段</span></span><br><span class="line"><span class="comment">//组合逻辑或时序逻辑赋值用pre_state做条件</span></span><br></pre></td></tr></table></figure>
+
+<p>要用到状态机直接默认上三段式状态机，前人总结的经验以及业界公认。</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/80789099-95693000-8bbd-11ea-9f0e-f94bef9ad842.png" alt="状态机编写技巧"></p>
+<p>小Tips，在写状态机时，将第二段需要保持状态循环的状态写法，写成这样的写法，可以省去很多else的分支。</p>
+<h3 id="仲裁状态机"><a href="#仲裁状态机" class="headerlink" title="仲裁状态机"></a>仲裁状态机</h3><p><img src="https://user-images.githubusercontent.com/27922538/80788688-669e8a00-8bbc-11ea-83fe-8ad9c1ec62e3.png" alt="仲裁状态机"></p>
+<p>在SDRAM控制器的设计中有一种设计方法，是仲裁状态机的设计，在SDRAM初始化操作进行完成后，进入上图所示的ARBIT仲裁状态，当SDRAM需要进行自刷新或读写操作，产生一个req请求信号，如果状态机正在处于仲裁状态，也就是当前无其他操作，就产生一个en使能信号进入对应的状态进行操作，操作完成后产生一个done信号回到仲裁状态。</p>
+<p>当状态机正在处于读或写状态时，如果自刷新请求也同时到来，状态机在READ/WRITE状态，则刷新请求一直存在，当进行完一个burstlength的读或写操作，也就是一个突发长度的操作后回到ARBIT状态（仲裁状态），这时才会产生ref_en（自刷新使能）。读写也是同样的逻辑，这也是仲裁状态机设计的关键。</p>
+<h3 id="主从状态机"><a href="#主从状态机" class="headerlink" title="主从状态机"></a>主从状态机</h3><p>上面的状态机其实就是SDRAM设计的主控制状态机，进入到读写或自刷新操作状态，里面也是使用的状态机描述，也就运用到了主从状态机的设计，画个图意思一下。</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/80790282-0231f980-8bc1-11ea-8ea6-709dabdc58f8.png" alt="主从状态机"></p>
+<p>这里主要体现的是主从状态机的串行化，即在从状态机跳转时，主状态机会一直在该状态等待。</p>
+<p>还有一种设计方法主从状态机并行化，在主状态机启动从状态机后，继续完成主机的状态，然后另一个某个状态中等待从机的操作结束标志，这样的状态机设计会复杂，但是可以提高整个系统的速度。本文只提一下不展开讨论。</p>
+<h3 id="状态机大法好"><a href="#状态机大法好" class="headerlink" title="状态机大法好"></a>状态机大法好</h3><p>在一个数字芯片设计中，可能包含了成百上千个有限状态机。对于控制流的设计基本上都是首选状态机，每个状态最理想的设计就是，start信号和over信号都是pulse，脉冲信号来控制这个状态的跳入跳出。状态划分越多，代表你这个状态干的事情越少，跳转条件就越简单。</p>
+<p>有一点，如果整体设计有很长的一段是流水线操作，用状态机描述反而有些别扭，因为整个流水线中操作很多而且是同时操作，状态名不好起，也不好打断，所以应该直接定义为一个状态，然后控制流水线的启动和结束就行了。</p>
+<p>状态机确保命名有确定的含义，一个状态做一件特定功能的事情，所谓代码即注释</p>
+<p>状态机加看门狗定时器。在设计状态机时为了防止状态机卡死在某个状态死循环，可以加个看门狗定时器，玩过单片机或DSP的朋友肯定很熟悉，看门狗定时器（Watch Dog Timer，WDT），其实就是一个计数器，在初始状态给计数器赋值一个很大的值，当状态机或程序开始运行后，计数器开始倒计数，如果状态机或程序运行正常，每隔一段时间发出指令或给计数器重新load一个大初始值，重新开始倒计数，如果计数到0就认为状态机或程序卡死，需要强制整个系统复位。</p>
+<p>load初始值整个操作被戏称为“喂狗”，一段时间没有喂狗，看门狗就会叫。 </p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>感谢阅读到最后，关于有限状态机你还有哪些要告诉我的，请在留言区留言。你点起来真好看。</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><p>《通信IC设计》——李庆华</p>
+<p><a href="https://www.zhihu.com/question/27579255/answer/39585837" target="_blank" rel="noopener">https://www.zhihu.com/question/27579255/answer/39585837</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/硅农.jpg" alt="NingHeChuan wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="NingHeChuan 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="NingHeChuan 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Verilog-ASIC/" rel="tag"><i class="fa fa-tag"></i> -Verilog -ASIC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/28/2020-4-28-%E7%A1%85%E5%86%9C%E5%86%B7%E7%9F%A5%E8%AF%86%E7%AC%AC%E4%B8%80%E6%9C%9F/" rel="next" title="硅农冷知识第一期">
+                <i class="fa fa-chevron-left"></i> 硅农冷知识第一期
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/08/2020-5-9-SpinalHDL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="这个语言可能会革了Verilog HDL的命？">
+                这个语言可能会革了Verilog HDL的命？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/NingHeChuan.jpg"
+                alt="NingHeChuan" />
+            
+              <p class="site-author-name" itemprop="name">NingHeChuan</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/NingHeChuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ninghechuan@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/ninghechuan/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-custom zhihu"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/ninghechuan" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/ninghechuan" title="NingHeChuan博客园" target="_blank">NingHeChuan博客园</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://exasic.com/" title="ExASIC" target="_blank">ExASIC</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.unisoc.com/cn" title="紫光展锐" target="_blank">紫光展锐</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#万物基于状态机——状态机大法好"><span class="nav-number">1.</span> <span class="nav-text">万物基于状态机——状态机大法好</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#万物基于状态机"><span class="nav-number">1.0.1.</span> <span class="nav-text">万物基于状态机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三段式状态机"><span class="nav-number">1.0.2.</span> <span class="nav-text">三段式状态机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#仲裁状态机"><span class="nav-number">1.0.3.</span> <span class="nav-text">仲裁状态机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主从状态机"><span class="nav-number">1.0.4.</span> <span class="nav-text">主从状态机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#状态机大法好"><span class="nav-number">1.0.5.</span> <span class="nav-text">状态机大法好</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后"><span class="nav-number">1.0.6.</span> <span class="nav-text">最后</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#References"><span class="nav-number">1.0.7.</span> <span class="nav-text">References</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">NingHeChuan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

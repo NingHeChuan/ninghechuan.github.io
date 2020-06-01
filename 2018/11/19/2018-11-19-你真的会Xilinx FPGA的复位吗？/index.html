@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/NingHeChuan.jpg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Xilinx,FPGA,Verilog," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Get Smart About Reset: Think Local, Not Global。​    对于复位信号的处理，为了方便我们习惯上采用全局复位，博主在很长一段时间内都是将复位信号作为一个I&#x2F;O口，通过拨码开关硬件复位。后来也看了一些书籍，采用异步复位同步释放，对自己设计的改进。 ​    不过自从我研读了Xilinx的White Paper后，让我对复位有了更新的认识。 ​    On">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你真的会Xilinx FPGA的复位吗？">
+<meta property="og:url" content="http://yoursite.com/2018/11/19/2018-11-19-%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BC%9AXilinx%20FPGA%E7%9A%84%E5%A4%8D%E4%BD%8D%E5%90%97%EF%BC%9F/index.html">
+<meta property="og:site_name" content="NingHeChuan">
+<meta property="og:description" content="Get Smart About Reset: Think Local, Not Global。​    对于复位信号的处理，为了方便我们习惯上采用全局复位，博主在很长一段时间内都是将复位信号作为一个I&#x2F;O口，通过拨码开关硬件复位。后来也看了一些书籍，采用异步复位同步释放，对自己设计的改进。 ​    不过自从我研读了Xilinx的White Paper后，让我对复位有了更新的认识。 ​    On">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/006C4SD7gy1fxd6dqsr7vj30it0an0tg.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006C4SD7gy1fxd6dqwbmgj30jh08y0t7.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006C4SD7gy1fxd6dqzyj7j30i8083t8y.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/006C4SD7gy1fxd6dr3r74j30f9042glo.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006C4SD7gy1fxd6dr7lttj30gu05ugls.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/006C4SD7gy1fxd6drcgn3j30eu075wet.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/006C4SD7gy1fxd6drfngoj30fo062t90.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/006C4SD7gy1fxd6drfngoj30fo062t90.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006C4SD7gy1fxd6btvu5vj30kk0b9taw.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/006C4SD7gy1fxyapnjoh1j30gb0gstaq.jpg">
+<meta property="article:published_time" content="2018-11-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-04-14T00:22:20.000Z">
+<meta property="article:author" content="NingHeChuan">
+<meta property="article:tag" content="Xilinx">
+<meta property="article:tag" content="FPGA">
+<meta property="article:tag" content="Verilog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wx2.sinaimg.cn/large/006C4SD7gy1fxd6dqsr7vj30it0an0tg.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/19/2018-11-19-你真的会Xilinx FPGA的复位吗？/"/>
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7479026399840953",
+    enable_page_level_ads: true
+  });
+</script>
+  <title>你真的会Xilinx FPGA的复位吗？ | NingHeChuan</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>	
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NingHeChuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个硅农的进阶之路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7479026399840953",
+    enable_page_level_ads: true
+  });
+</script>
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/19/2018-11-19-%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BC%9AXilinx%20FPGA%E7%9A%84%E5%A4%8D%E4%BD%8D%E5%90%97%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="NingHeChuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/NingHeChuan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NingHeChuan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">你真的会Xilinx FPGA的复位吗？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		  
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-19T00:00:00+08:00">
+                2018-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Get-Smart-About-Reset-Think-Local-Not-Global。"><a href="#Get-Smart-About-Reset-Think-Local-Not-Global。" class="headerlink" title="Get Smart About Reset: Think Local, Not Global。"></a>Get Smart About Reset: Think Local, Not Global。</h2><p>​    对于复位信号的处理，为了方便我们习惯上采用全局复位，博主在很长一段时间内都是将复位信号作为一个I/O口，通过拨码开关硬件复位。后来也看了一些书籍，采用异步复位同步释放，对自己设计的改进。</p>
+<p>​    不过自从我研读了Xilinx的White Paper后，让我对复位有了更新的认识。</p>
+<p>​    One of the commandments of digital design states,”Thou shalt have a master reset for all flip-flops so that the test engineer will love you, and your simulations will not remain undefined for time eternal.”</p>
+<p>​    这句是用来装逼的。使用全局复位有利于我们仿真，所有的寄存器都是有初始值的，也可以在任意时刻让你的寄存器恢复初值，所以验证工程师很喜欢这样的设计，但是Xilinx建议的是尽量避免使用全局复位，这是为什么呢。</p>
+<h2 id="全局复位并不是好的处理方式"><a href="#全局复位并不是好的处理方式" class="headerlink" title="全局复位并不是好的处理方式"></a>全局复位并不是好的处理方式</h2><p>​        我们习惯上通常使用的复位有三种，</p>
+<p>​        硬件开关：复位信号接一个拨码开关。</p>
+<p>​        电源芯片：上电时候电源芯片产生，可以长时间维持，直到稳定。</p>
+<p>​        控制芯片：控制芯片产生复位脉冲。</p>
+<p>​    这些复位信号和FPGA内部信号的变化比起来是比较慢的。复位按钮最快也会到达毫秒级别，而FPGA内部信号都是纳秒级别的变化。全局复位的周期远大于系统时钟的周期，是完全可以保证所有的触发器被成功复位的。</p>
+<p>​    但随着系统的频率越来越快，全局复位信号的释放形成一个高扇出的网络。</p>
+<blockquote>
+<p>Fan-out即扇出，模块直接调用的下级模块的个数，如果这个数值过大的话，在FPGA直接表现为net delay较大，不利于时序收敛。因此，在写代码时应尽量避免高扇出的情况。</p>
+</blockquote>
+<p><img src="https://wx2.sinaimg.cn/large/006C4SD7gy1fxd6dqsr7vj30it0an0tg.jpg" alt="image"></p>
+<p>​    如图，全局复位的释放需要传输到不同的触发器。每一个触发器需要被释放复位，但是随着时钟频率的提高，加上复位路径网络的延迟，而且全局复位还是一个高扇出的网络，所以这对系统的时序是一个大挑战。</p>
+<p><img src="https://wx1.sinaimg.cn/large/006C4SD7gy1fxd6dqwbmgj30jh08y0t7.jpg" alt="image"></p>
+<p>​    通常情况下，复位信号的异步释放，没有办法保证所有的触发器都能在同一时间内释放。触发器在A时刻接收到复位信号释放是最稳定的，在下一个时钟沿来临被激活，但是如果在C时刻接收到复位信号释放无法被激活，在B时刻收到复位信号释放，则会引起亚稳态。</p>
+<p><img src="https://ws4.sinaimg.cn/large/006C4SD7gy1fxd6dqzyj7j30i8083t8y.jpg" alt="image"></p>
+<p>​    随着系统时钟频率的提高，并不是所有的触发器都能在同一个时刻从复位状态被释放。</p>
+<h2 id="复位真的有那么重要吗？"><a href="#复位真的有那么重要吗？" class="headerlink" title="复位真的有那么重要吗？"></a>复位真的有那么重要吗？</h2><p>​    白皮书上又说了，好的消息是99.9%的情况下，全局复位的异步释放并不会出现问题。所以大多数电路都可以正常工作。但是，如果你有了第一次就不能工作的电路，那你就是遇到那0.01%的情况，很不幸你的复位信号被在错误的时刻重置。（哈哈，皮）<br>​    在一些情况下，复位释放的时间并不重要。</p>
+<p><img src="https://wx1.sinaimg.cn/large/006C4SD7gy1fxd6dr3r74j30f9042glo.jpg" alt="image"></p>
+<p>​    当你的数据采用流水线操作的时候，复位释放的时间并不重要，因为不管你流水线后面的触发器复位释放后是否出错，只需要一些周期后，整个流水线就又会正常工作了。白皮书上还说，这样的复位也是没有意义的。</p>
+<p>​    但是有一些情况下，复位的释放后是很重要的。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006C4SD7gy1fxd6dr7lttj30gu05ugls.jpg" alt="image"></p>
+<p>​    比如独热码状态机。如果表示独热码状态的第一个触发器比第二个触发器早释放了一个时钟周期，那状态机的状态机会跳转到一个无效的状态。如果所有的表示独热码的寄存器无法在同一个周期内被释放，那状态机肯定会跳转到一个无效的状态。还有一些例子，请读者自己看白皮书。</p>
+<h2 id="解决99-99-的情况"><a href="#解决99-99-的情况" class="headerlink" title="解决99.99%的情况"></a>解决99.99%的情况</h2><p><img src="https://wx2.sinaimg.cn/large/006C4SD7gy1fxd6drcgn3j30eu075wet.jpg" alt="image"></p>
+<p>​    其实当Xilinx FPGA配置或重新配置时，所有的单元都会被初始化。白皮书称为master reset，因为这可比你复位一些D触发器要强得多，它甚至初始化了片内RAM。</p>
+<p>​    Xilinx的器件也有嵌入处理的系列，软核或硬核。在程序执行第一条指令前，程序和数据区域已经定义好了。有了上电复位，还用专门消耗逻辑资源去复位触发器是没有意义的。</p>
+<h2 id="解决0-01-的方法"><a href="#解决0-01-的方法" class="headerlink" title="解决0.01%的方法"></a>解决0.01%的方法</h2><p>​    当然，白皮书也给出了处理复位的建议和方法。</p>
+<p><img src="https://wx4.sinaimg.cn/large/006C4SD7gy1fxd6drfngoj30fo062t90.jpg" alt="image"></p>
+<p>​    Think Local, Not Global。异步复位，同步释放的方法。用内部定义复位信号的方法来复位触发器，而不是全都直接使用全局复位信号。当进行复位操作时，所有的触发器被预设为1。如上图，移位寄存器的最后一个触发器去操作模块内部定义的复位网络。当复位信号释放时，移位寄存器经过移位，当最后一个触发器由高电平变为低电平时，对本地的复位网络进行复位操作。也就是异步复位，同步释放。</p>
+<h2 id="复位的消耗的资源比你想象的要多"><a href="#复位的消耗的资源比你想象的要多" class="headerlink" title="复位的消耗的资源比你想象的要多"></a>复位的消耗的资源比你想象的要多</h2><ul>
+<li><p>复位网络占用大量布线资源。</p>
+</li>
+<li><p>提高了布局布线时间。</p>
+</li>
+<li><p>使用器件的逻辑资源。</p>
+</li>
+<li><p>会使你的设计变得更大。</p>
+</li>
+<li><p>占用更多的逻辑资源肯定会影响你的性能。</p>
+</li>
+</ul>
+<p>具体请参阅白皮书。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>​    并不是所有部分的设计都需要复位，所以设计者在设计过程中应该准确判断需要被复位的部分，从而采用异步复位、同步释放的方法进行对复位的严格处理。</p>
+<p>​    当我们在设计每一个部分的时候，都要内心问问自己，这个bit需要被复位吗？</p>
+<p>​    那么怎样处理Xilinx FPGA中的复位呢？Xilinx的工程师也给出了解释和方法。</p>
+<p><a href="https://www.eetimes.com/document.asp?doc_id=1278998" target="_blank" rel="noopener">https://www.eetimes.com/document.asp?doc_id=1278998</a></p>
+<p><a href="http://xilinx.eetrend.com/d6-xilinx/article/2013-07/4343.html" target="_blank" rel="noopener">http://xilinx.eetrend.com/d6-xilinx/article/2013-07/4343.html</a></p>
+<p><strong>White Paper获得在微信订阅号后台回复“wp272”即可获得！</strong></p>
+<p>​    简单总结就是，Xilinx的FPGA 应该尽量避免全局复位，有些部分的设计都可以不用复位，必需要复位的设计而采用 同步 高复位。</p>
+<p>​    代码如下。设计中需要复位的部分，使用产生的sys_rst信号进行同步复位，而且是同步 高复位。再次贴出下图。</p>
+<p><img src="https://wx4.sinaimg.cn/large/006C4SD7gy1fxd6drfngoj30fo062t90.jpg" alt="image"></p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> Sys_Rst(</span><br><span class="line">    <span class="keyword">input</span>       clk,</span><br><span class="line">    <span class="keyword">input</span>       rst,</span><br><span class="line">    <span class="keyword">output</span>      sys_rst</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">reg</span>     rst_r0;</span><br><span class="line"><span class="keyword">reg</span>     rst_r1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> rst)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(rst)<span class="keyword">begin</span></span><br><span class="line">        rst_r0 &lt;= <span class="number">1'b1</span>;</span><br><span class="line">        rst_r1 &lt;= <span class="number">1'b1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        rst_r0 &lt;= <span class="number">1'b0</span>;</span><br><span class="line">        rst_r1 &lt;= rst_r0;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">assign</span>  sys_rst = rst_r1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://ws1.sinaimg.cn/large/006C4SD7gy1fxd6btvu5vj30kk0b9taw.jpg" alt="image"></p>
+<p><img src="https://wx3.sinaimg.cn/large/006C4SD7gy1fxyapnjoh1j30gb0gstaq.jpg" alt="image"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/硅农.jpg" alt="NingHeChuan wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="NingHeChuan 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="NingHeChuan 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Xilinx/" rel="tag"><i class="fa fa-tag"></i> Xilinx</a>
+          
+            <a href="/tags/FPGA/" rel="tag"><i class="fa fa-tag"></i> FPGA</a>
+          
+            <a href="/tags/Verilog/" rel="tag"><i class="fa fa-tag"></i> Verilog</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/06/2018-12-06-Verilog%E8%AE%BE%E8%AE%A1%E4%BD%8E%E9%80%9AFIR%E6%BB%A4%E6%B3%A2%E5%99%A8/" rel="prev" title="Verilog设计低通FIR滤波器">
+                Verilog设计低通FIR滤波器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/NingHeChuan.jpg"
+                alt="NingHeChuan" />
+            
+              <p class="site-author-name" itemprop="name">NingHeChuan</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/NingHeChuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ninghechuan@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/ninghechuan/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-custom zhihu"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/ninghechuan" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/ninghechuan" title="NingHeChuan博客园" target="_blank">NingHeChuan博客园</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://exasic.com/" title="ExASIC" target="_blank">ExASIC</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.unisoc.com/cn" title="紫光展锐" target="_blank">紫光展锐</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Get-Smart-About-Reset-Think-Local-Not-Global。"><span class="nav-number">1.</span> <span class="nav-text">Get Smart About Reset: Think Local, Not Global。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全局复位并不是好的处理方式"><span class="nav-number">2.</span> <span class="nav-text">全局复位并不是好的处理方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复位真的有那么重要吗？"><span class="nav-number">3.</span> <span class="nav-text">复位真的有那么重要吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决99-99-的情况"><span class="nav-number">4.</span> <span class="nav-text">解决99.99%的情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决0-01-的方法"><span class="nav-number">5.</span> <span class="nav-text">解决0.01%的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复位的消耗的资源比你想象的要多"><span class="nav-number">6.</span> <span class="nav-text">复位的消耗的资源比你想象的要多</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">NingHeChuan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

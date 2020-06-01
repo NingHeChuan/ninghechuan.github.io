@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/NingHeChuan.jpg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Verilog," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="搜索技术问题，还是得用英文 + Google搜索或Bing国际版搜索。不是不相信国内老哥们写的博客，而是直接看人家原版文档是真的好。  我们通常需要异步FIFO用作两个不同时钟域的模块之间的数据缓冲，确保不会丢失数据，只有在读速率快，写速率慢的时候，需要使用FIFO才能缓存来不及读取的数据。反之？？ 通常因为读速率慢于写速率，慢的模块来不及读取的数据要被缓存下来，所以说，FIFO的工作模式应该是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你问我FIFO有多深？">
+<meta property="og:url" content="http://yoursite.com/2019/01/20/2019-1-20-%E4%BD%A0%E9%97%AE%E6%88%91FIFO%E6%9C%89%E5%A4%9A%E6%B7%B1%EF%BC%9F/index.html">
+<meta property="og:site_name" content="NingHeChuan">
+<meta property="og:description" content="搜索技术问题，还是得用英文 + Google搜索或Bing国际版搜索。不是不相信国内老哥们写的博客，而是直接看人家原版文档是真的好。  我们通常需要异步FIFO用作两个不同时钟域的模块之间的数据缓冲，确保不会丢失数据，只有在读速率快，写速率慢的时候，需要使用FIFO才能缓存来不及读取的数据。反之？？ 通常因为读速率慢于写速率，慢的模块来不及读取的数据要被缓存下来，所以说，FIFO的工作模式应该是">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/65330472-3554e900-dbed-11e9-8ef4-29e3fde427e1.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/65330473-35ed7f80-dbed-11e9-9b54-63d3e5582b84.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/65330474-35ed7f80-dbed-11e9-89e1-d2aab35d695d.png">
+<meta property="article:published_time" content="2019-01-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-29T12:27:22.000Z">
+<meta property="article:author" content="NingHeChuan">
+<meta property="article:tag" content="Verilog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/27922538/65330472-3554e900-dbed-11e9-8ef4-29e3fde427e1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/20/2019-1-20-你问我FIFO有多深？/"/>
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7479026399840953",
+    enable_page_level_ads: true
+  });
+</script>
+  <title>你问我FIFO有多深？ | NingHeChuan</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>	
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NingHeChuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个硅农的进阶之路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7479026399840953",
+    enable_page_level_ads: true
+  });
+</script>
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/20/2019-1-20-%E4%BD%A0%E9%97%AE%E6%88%91FIFO%E6%9C%89%E5%A4%9A%E6%B7%B1%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="NingHeChuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/NingHeChuan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NingHeChuan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">你问我FIFO有多深？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		  
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-20T00:00:00+08:00">
+                2019-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>搜索技术问题，还是得用英文 + Google搜索或Bing国际版搜索。<br>不是不相信国内老哥们写的博客，而是直接看人家原版文档是真的好。</p>
+</blockquote>
+<p>我们通常需要异步FIFO用作两个不同时钟域的模块之间的数据缓冲，确保不会丢失数据，只有在读速率快，写速率慢的时候，需要使用FIFO才能缓存来不及读取的数据。反之？？</p>
+<p>通常因为读速率慢于写速率，慢的模块来不及读取的数据要被缓存下来，所以说，FIFO的工作模式应该是，数据突发写入的形式，Bursts。也就是隔一段时间突发的写一组数据。如果连续写入的话，因为读速率慢于写速率，FIFO肯定会写满，FIFO的深度就需要无穷大，才能确保数据不丢失。</p>
+<p>我们需要知道，读写频率，突发速率，突发长度进而确定FIFO的最小深度。</p>
+<p>上文的意思，已经明确，我们需要的FIFO深度是因为读取速率慢于写入速率而未能读取的数据量。明确了这一点原理，就可以不需要记任何公式，而直接计算任何情况下的传输问题。</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/65330472-3554e900-dbed-11e9-8ef4-29e3fde427e1.png" alt="读写"></p>
+<h4 id="Case-1：fA-gt-fB-读写之间没有空闲周期"><a href="#Case-1：fA-gt-fB-读写之间没有空闲周期" class="headerlink" title="Case-1：fA &gt; fB 读写之间没有空闲周期"></a>Case-1：fA &gt; fB 读写之间没有空闲周期</h4><p>写速率fA = 80MHz</p>
+<p>读速率fB = 50MHz</p>
+<p>突发长度Burst Length = 120</p>
+<p>读写之间没有空闲周期，是连续读写一个突发长度。</p>
+<h4 id="Sol："><a href="#Sol：" class="headerlink" title="Sol："></a>Sol：</h4><p>写一个数据需要的时间 = 1 / 80MHz = 12.5ns</p>
+<p>写一个突发需要的时间 = 120 * 12.5ns = 1500ns</p>
+<p>读一个数据需要的时间 = 1 / 50MHz = 20ns</p>
+<p>每1500ns，120个数据被写入FIFO，但读一个数据需要20ns的时间</p>
+<p>可以计算出，1500ns内读出多少个数据，1500 / 20 = 75</p>
+<p>剩下的没有读出，就存在FIFO中，则需要120 - 75  = 45</p>
+<p>所以这种情况下，需要的FIFO最小深度为45</p>
+<p>拿笔在纸上推导下更清楚。</p>
+<h4 id="Case-2：fA-gt-fB-在两个连续读写之间有一个周期的延迟"><a href="#Case-2：fA-gt-fB-在两个连续读写之间有一个周期的延迟" class="headerlink" title="Case-2：fA &gt; fB 在两个连续读写之间有一个周期的延迟"></a>Case-2：fA &gt; fB 在两个连续读写之间有一个周期的延迟</h4><h4 id="Sol：-1"><a href="#Sol：-1" class="headerlink" title="Sol："></a>Sol：</h4><p>这个题目是制造了一些假象，这其实和Case-1的情况是一样的，因为两个连续的读写之间通常都会有延迟。解决方法，如同Case-1。</p>
+<h4 id="Case–3：fA-gt-fB读写都有空闲周期（IDLE-Cycles）"><a href="#Case–3：fA-gt-fB读写都有空闲周期（IDLE-Cycles）" class="headerlink" title="Case–3：fA &gt; fB读写都有空闲周期（IDLE Cycles）"></a>Case–3：fA &gt; fB读写都有空闲周期（IDLE Cycles）</h4><p>写速率fA = 80MHz</p>
+<p>读速率fB = 50MHz</p>
+<p>突发长度Burst Length = 120</p>
+<p>两个连续写入之间的空闲周期为 = 1</p>
+<p>两个连续读取之间的空闲周期为 = 3</p>
+<h4 id="Sol：-2"><a href="#Sol：-2" class="headerlink" title="Sol："></a>Sol：</h4><p>两个连续写入之间的空闲周期为1的意思是，每写入一个数据，要等待一个周期，再写入下一个数据。这也可以理解为每两个周期，写入一个数据。</p>
+<p>两个连续读取之间的空闲周期为3的意思是，每读取一个数据，要等待三个周期，再读取下一个数据。这也可以理解为每四个周期，读取一个数据。</p>
+<p>写一个数据需要的时间 = 2 * (1 / 80MHz) = 25ns</p>
+<p>写一个突发需要的时间 = 120 * 25ns = 3000ns</p>
+<p>读一个数据需要的时间 = 4 * (1 / 50MHz) = 80ns</p>
+<p>每3000ns，120个数据被写入FIFO，但读一个数据需要80ns的时间</p>
+<p>可以计算出，3000ns内读出可以多少个数据，3000 / 80 = 37.5</p>
+<p>剩下的没有读出，就存在FIFO中，则需要120 - 37.5 = 82.5 约等于 83</p>
+<p>所以这种情况下，需要的FIFO最小深度为83</p>
+<h4 id="Case-4：fA-gt-fB并给出了读写使能的百分比"><a href="#Case-4：fA-gt-fB并给出了读写使能的百分比" class="headerlink" title="Case-4：fA &gt; fB并给出了读写使能的百分比"></a>Case-4：fA &gt; fB并给出了读写使能的百分比</h4><p>写速率fA = 80MHz</p>
+<p>读速率fB = 50MHz</p>
+<p>突发长度Burst Length = 120</p>
+<p>写使能占得百分比为 = 50% = 1 / 2</p>
+<p>读使能占得百分比为 = 25% = 1 / 4</p>
+<h4 id="Sol：-3"><a href="#Sol：-3" class="headerlink" title="Sol："></a>Sol：</h4><p>用你聪明的大脑想一想，这是不是和Case-3也是一模一样呢，写使能占得百分比为50%，即每两个周期写入一个数据。读使能占得百分比为25%，即每四个周期读取一个数据。</p>
+<h4 id="Case-5：fA-lt-fB-读写操作无空闲周期（每两个连续读写之间有一个周期延迟）"><a href="#Case-5：fA-lt-fB-读写操作无空闲周期（每两个连续读写之间有一个周期延迟）" class="headerlink" title="Case-5：fA &lt; fB 读写操作无空闲周期（每两个连续读写之间有一个周期延迟）"></a>Case-5：fA &lt; fB 读写操作无空闲周期（每两个连续读写之间有一个周期延迟）</h4><h4 id="Sol：-4"><a href="#Sol：-4" class="headerlink" title="Sol："></a>Sol：</h4><p>这类题目，因为读取速率大于写入速率，FIFO永远不会被写满，所以FIFO深度为1就够了。</p>
+<h4 id="Case-6：fA-lt-fB-读写操作有空闲周期（读写使能占得百分比问题）"><a href="#Case-6：fA-lt-fB-读写操作有空闲周期（读写使能占得百分比问题）" class="headerlink" title="Case-6：fA &lt; fB 读写操作有空闲周期（读写使能占得百分比问题）"></a>Case-6：fA &lt; fB 读写操作有空闲周期（读写使能占得百分比问题）</h4><p>写速率fA = 30MHz</p>
+<p>读速率fB = 50MHz</p>
+<p>突发长度Burst Length = 120</p>
+<p>两个连续写入之间的空闲周期为 = 1</p>
+<p>两个连续读取之间的空闲周期为 = 3</p>
+<h4 id="Sol"><a href="#Sol" class="headerlink" title="Sol:"></a>Sol:</h4><p>两个连续写入之间的空闲周期为1的意思是，每写入一个数据，要等待一个周期，再写入下一个数据。这也可以理解为每两个周期，写入一个数据。</p>
+<p>两个连续读取之间的空闲周期为3的意思是，每读取一个数据，要等待三个周期，再读取下一个数据。这也可以理解为每四个周期，读取一个数据。</p>
+<p>写一个数据需要的时间 = 2 * (1 / 30MHz) = 66.667ns</p>
+<p>写一个突发需要的时间 = 120 * 66.667ns = 8000ns</p>
+<p>读一个数据需要的时间 = 4 * (1 / 50MHz) = 80ns</p>
+<p>每8000ns，120个数据被写入FIFO，但读一个数据需要80ns的时间</p>
+<p>可以计算出，8000ns内读出可以多少个数据，8000 / 80 = 100</p>
+<p>剩下的没有读出，就存在FIFO中，则需要120 - 100 = 20</p>
+<p>所以这种情况下，需要的FIFO最小深度为20</p>
+<h4 id="Case-7：fA-fB-读写操作无空闲周期（每两个连续读写之间有一个周期延迟）"><a href="#Case-7：fA-fB-读写操作无空闲周期（每两个连续读写之间有一个周期延迟）" class="headerlink" title="Case-7：fA = fB 读写操作无空闲周期（每两个连续读写之间有一个周期延迟）"></a>Case-7：fA = fB 读写操作无空闲周期（每两个连续读写之间有一个周期延迟）</h4><h4 id="Sol：-5"><a href="#Sol：-5" class="headerlink" title="Sol："></a>Sol：</h4><p>很好理解。</p>
+<p>如果读写时钟为同一个时钟，则可以不需要FIFO。</p>
+<p>如果读写时钟存在相位差，FIFO深度为1，也是够了。</p>
+<h4 id="Case-8：fA-fB-读写操作有空闲周期（读写使能占得百分比问题）"><a href="#Case-8：fA-fB-读写操作有空闲周期（读写使能占得百分比问题）" class="headerlink" title="Case-8：fA = fB 读写操作有空闲周期（读写使能占得百分比问题）"></a>Case-8：fA = fB 读写操作有空闲周期（读写使能占得百分比问题）</h4><p>写速率fA = 50MHz</p>
+<p>读速率fB = 50MHz</p>
+<p>突发长度Burst Length = 120</p>
+<p>两个连续写入之间的空闲周期为 = 1</p>
+<p>两个连续读取之间的空闲周期为 = 3</p>
+<h4 id="Sol：-6"><a href="#Sol：-6" class="headerlink" title="Sol："></a>Sol：</h4><p>同样的解题思路。</p>
+<p>两个连续写入之间的空闲周期为1的意思是，每写入一个数据，要等待一个周期，再写入下一个数据。这也可以理解为每两个周期，写入一个数据。</p>
+<p>两个连续读取之间的空闲周期为3的意思是，每读取一个数据，要等待三个周期，再读取下一个数据。这也可以理解为每四个周期，读取一个数据。</p>
+<p>写一个数据需要的时间 = 2 * (1 / 50MHz) = 40ns</p>
+<p>写一个突发需要的时间 = 120 * 40ns = 4800ns</p>
+<p>读一个数据需要的时间 = 4 * (1 / 50MHz) = 80ns</p>
+<p>每4800ns，120个数据被写入FIFO，但读一个数据需要80ns的时间</p>
+<p>可以计算出，4800ns内读出可以多少个数据，4800 / 80 = 60</p>
+<p>剩下的没有读出，就存在FIFO中，则需要120 - 60 = 60</p>
+<p>所以这种情况下，需要的FIFO最小深度为60</p>
+<h4 id="Case-9-如果数据速率如下所示"><a href="#Case-9-如果数据速率如下所示" class="headerlink" title="Case-9 如果数据速率如下所示"></a>Case-9 如果数据速率如下所示</h4><p>读写速率相等</p>
+<p>每100个时钟写入80个数据</p>
+<p>每10个时钟读取8个数据</p>
+<p>突发长度为160</p>
+<h4 id="Sol：-7"><a href="#Sol：-7" class="headerlink" title="Sol："></a>Sol：</h4><p>写速率的其他20个周期的位置是随机的。所以就有了下面几种情况。</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/65330473-35ed7f80-dbed-11e9-9b54-63d3e5582b84.png" alt="写周期数"></p>
+<p><img src="https://user-images.githubusercontent.com/27922538/65330474-35ed7f80-dbed-11e9-89e1-d2aab35d695d.png" alt="异步传输"></p>
+<p>为了保证数据的传输不丢失，我们考虑到最坏的情况。</p>
+<p>考虑的最坏的情况，就是写数据速率和读数据速率之间的差别最大。即写数据速率最大，读数据速率最小。</p>
+<p>写操作最坏得情况是Case-4 ，即两次连续的突发写入，又称“背靠背”的情况。</p>
+<p>即为在160个周期内写入160个数据。</p>
+<p>读数据速率读出每个数据的时间为  = 8 / 10 </p>
+<p>所以160个周期读出数据的个数为 160 * （8 * 10） = 128</p>
+<p>剩下的没有读出，就存在FIFO中，则需要160 - 128 = 32</p>
+<p>所以这种情况下，需要的FIFO最小深度为32。</p>
+<h4 id="Case-10：如下所示"><a href="#Case-10：如下所示" class="headerlink" title="Case-10：如下所示"></a>Case-10：如下所示</h4><p>写入时钟20MHz</p>
+<p>读出时钟40MHz</p>
+<p>每1000个时钟周期写入500个数据</p>
+<p>每4个时钟周期读出1个数据</p>
+<p>读写数据位宽一致。</p>
+<h4 id="Sol：-8"><a href="#Sol：-8" class="headerlink" title="Sol："></a>Sol：</h4><p>考虑到“背靠背”的情况突发长度则为500 * 2 = 1000</p>
+<p>则为每1000个时钟周期写入1000个数据</p>
+<p>每4个周期，读取一个数据。</p>
+<p>写一个数据需要的时间 = 1 / 20MHz = 50ns</p>
+<p>写一个突发需要的时间 = 1000 * 50ns = 50000ns</p>
+<p>读一个数据需要的时间 = 4 * (1 / 40MHz) = 100ns</p>
+<p>每50000ns，120个数据被写入FIFO，但读一个数据需要100ns的时间</p>
+<p>可以计算出，50000ns内读出可以多少个数据，50000 /100 = 500</p>
+<p>剩下的没有读出，就存在FIFO中，则需要1000- 500 = 500</p>
+<p>所以这种情况下，需要的FIFO最小深度为500</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p>CALCULATION OF FIFO DEPTH - MADE EASY —— Putta Satish</p>
+<p><a href="http://comm.chinaaet.com/adi/blogdetail/37555.html" target="_blank" rel="noopener">http://comm.chinaaet.com/adi/blogdetail/37555.html</a></p>
+<p><a href="https://blog.csdn.net/u011412586/article/details/10241585/" target="_blank" rel="noopener">https://blog.csdn.net/u011412586/article/details/10241585/</a></p>
+<p>参考文献中诸多实例，可以参考点击查看。参考文献的文档关注<strong>硅农</strong>订阅号，后台回复<strong>FIFO Depth Cal</strong>即可获得。这份文档的写的太好了，解决所有FIFO深度计算类笔面试题都不再话下。</p>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><p>FIFO深度 /（写入速率 - 读出速率）= FIFO被填满时间  &gt;  数据包传送时间 = 写入数据量 / 写入速率</p>
+<p>确保对FIFO写数据时不存在overflow,从FIFO读出数据时不存在underflow。</p>
+<p>即：FIFO深度 = (写入速率 - 读出速率) * (写入数据量 / 写入速率)</p>
+<p>例：A/D采样率50MHz，dsp读A/D读的速率40MHz，要不丢失地将10万个采样数据送入DSP，在A/D在和DSP之间至少加多大容量（深度）的FIFO才行？</p>
+<p>100,000 / 50MHz = 1/500 s = 2ms<br>(50MHz - 40MHz) * 1/500 = 20k就是FIFO深度。</p>
+<h4 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h4><p>FIFO深度计算： 写入时钟20MHz，读出时钟40MHz，每1000个时钟周期写入500个数据，每4个时钟周期读出1个数据，读写数据位宽一致。</p>
+<p>写时钟频率w_clk,<br>读时钟频率 r_clk,<br>写时钟周期里，每B个时钟周期会有A个数据写入FIFO<br>读时钟周期里，每Y个时钟周期会有X个数据读出FIFO<br>则，FIFO的最小深度是？</p>
+<p>fifo_depth = burst_length - burst_length * X / Y * r_clk / w_clk</p>
+<p>首先认为写操作是Burst（突发）进行的，但是写操作的效率并不是100%，而是A/B，因此实际的写速率为Fwr = (A/B)*w_clk。同理，实际的读速率为Frd = (X/Y) * r_clk。</p>
+<p>而且这类题也没有约束突发长度场景，正常情况下应该是这样的：</p>
+<p>空闲——Burst——空闲——Burst——空闲——Burst</p>
+<p>但是在计算时要考虑极端的情况，即“背靠背”的情况。</p>
+<p>空闲——Burst——Burst——空闲——Burst——Burst——空闲</p>
+<p>这就是”背靠背“的极端情况。</p>
+<p>所以这里的burst_length = (A+A) /  w_clk</p>
+<p>此题得解。</p>
+<p>fifo_depth = 1000-1000(1/4)*(40/20) = 500</p>
+<h4 id="例子-2"><a href="#例子-2" class="headerlink" title="例子"></a>例子</h4><p>再来一个例子。</p>
+<p>例：一个8bit宽的AFIFO，输入时钟为100MHz，输出时钟为95MHz，设一个package为4Kbit，且两个package之间的发送间距足够大。求AFIFO的深度？</p>
+<p>公式：fifo_depth = burst_length - burst_length * (X / Y) * (r_clk/w_clk)</p>
+<p>burst_length = 4Kbit/8bit ，有两种结果</p>
+<p>其一，根据存储厂商的惯用算法，4Kbit=4000bit，burst_length=500；</p>
+<p>其二，用一般二进制算法，4Kbit=4*1024=4096bit，burst_length=512。</p>
+<p>因为X和Y的值没有给出，所以默认为1.</p>
+<p>其一，fifo_depth = 500 - 500*（95/100）= 25 ，所以fifo_depth最小取值是25 。</p>
+<p>其二，fifo_depth = 512 - 512*（95/100）= 25.6 ，所以fifo_depth最小取值是26 。</p>
+<h4 id="SDRAM中应用"><a href="#SDRAM中应用" class="headerlink" title="SDRAM中应用"></a>SDRAM中应用</h4><p>在SDRAM的应用中，我们通常使用的读写FIFO是突发长度的2倍，比如突发长度为256，那FIFO的深度设置为512，使得FIFO始终保持半满的状态。可以保证数据的传输。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/硅农.jpg" alt="NingHeChuan wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="NingHeChuan 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="NingHeChuan 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Verilog/" rel="tag"><i class="fa fa-tag"></i> Verilog</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/17/2019-1-17-Verilog%E8%AE%BE%E8%AE%A1Valid-Ready%E6%8F%A1%E6%89%8B%E5%8D%8F%E8%AE%AE/" rel="next" title="Verilog设计Valid-Ready握手协议">
+                <i class="fa fa-chevron-left"></i> Verilog设计Valid-Ready握手协议
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/25/2019-1-25-Verilog%E8%AE%BE%E8%AE%A1IIR%E4%BD%8E%E9%80%9A%E6%BB%A4%E6%B3%A2%E5%99%A8/" rel="prev" title="Verilog设计IIR低通滤波器">
+                Verilog设计IIR低通滤波器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/NingHeChuan.jpg"
+                alt="NingHeChuan" />
+            
+              <p class="site-author-name" itemprop="name">NingHeChuan</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/NingHeChuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ninghechuan@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/ninghechuan/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-custom zhihu"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/ninghechuan" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/ninghechuan" title="NingHeChuan博客园" target="_blank">NingHeChuan博客园</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://exasic.com/" title="ExASIC" target="_blank">ExASIC</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.unisoc.com/cn" title="紫光展锐" target="_blank">紫光展锐</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Case-1：fA-gt-fB-读写之间没有空闲周期"><span class="nav-number">1.</span> <span class="nav-text">Case-1：fA &gt; fB 读写之间没有空闲周期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sol："><span class="nav-number">2.</span> <span class="nav-text">Sol：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Case-2：fA-gt-fB-在两个连续读写之间有一个周期的延迟"><span class="nav-number">3.</span> <span class="nav-text">Case-2：fA &gt; fB 在两个连续读写之间有一个周期的延迟</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sol：-1"><span class="nav-number">4.</span> <span class="nav-text">Sol：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Case–3：fA-gt-fB读写都有空闲周期（IDLE-Cycles）"><span class="nav-number">5.</span> <span class="nav-text">Case–3：fA &gt; fB读写都有空闲周期（IDLE Cycles）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sol：-2"><span class="nav-number">6.</span> <span class="nav-text">Sol：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Case-4：fA-gt-fB并给出了读写使能的百分比"><span class="nav-number">7.</span> <span class="nav-text">Case-4：fA &gt; fB并给出了读写使能的百分比</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sol：-3"><span class="nav-number">8.</span> <span class="nav-text">Sol：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Case-5：fA-lt-fB-读写操作无空闲周期（每两个连续读写之间有一个周期延迟）"><span class="nav-number">9.</span> <span class="nav-text">Case-5：fA &lt; fB 读写操作无空闲周期（每两个连续读写之间有一个周期延迟）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sol：-4"><span class="nav-number">10.</span> <span class="nav-text">Sol：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Case-6：fA-lt-fB-读写操作有空闲周期（读写使能占得百分比问题）"><span class="nav-number">11.</span> <span class="nav-text">Case-6：fA &lt; fB 读写操作有空闲周期（读写使能占得百分比问题）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sol"><span class="nav-number">12.</span> <span class="nav-text">Sol:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Case-7：fA-fB-读写操作无空闲周期（每两个连续读写之间有一个周期延迟）"><span class="nav-number">13.</span> <span class="nav-text">Case-7：fA &#x3D; fB 读写操作无空闲周期（每两个连续读写之间有一个周期延迟）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sol：-5"><span class="nav-number">14.</span> <span class="nav-text">Sol：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Case-8：fA-fB-读写操作有空闲周期（读写使能占得百分比问题）"><span class="nav-number">15.</span> <span class="nav-text">Case-8：fA &#x3D; fB 读写操作有空闲周期（读写使能占得百分比问题）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sol：-6"><span class="nav-number">16.</span> <span class="nav-text">Sol：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Case-9-如果数据速率如下所示"><span class="nav-number">17.</span> <span class="nav-text">Case-9 如果数据速率如下所示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sol：-7"><span class="nav-number">18.</span> <span class="nav-text">Sol：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Case-10：如下所示"><span class="nav-number">19.</span> <span class="nav-text">Case-10：如下所示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sol：-8"><span class="nav-number">20.</span> <span class="nav-text">Sol：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number"></span> <span class="nav-text">Reference</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例子"><span class="nav-number">1.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例子-1"><span class="nav-number">2.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例子-2"><span class="nav-number">3.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SDRAM中应用"><span class="nav-number">4.</span> <span class="nav-text">SDRAM中应用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">NingHeChuan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

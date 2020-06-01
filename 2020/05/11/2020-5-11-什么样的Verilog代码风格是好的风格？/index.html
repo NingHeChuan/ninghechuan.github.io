@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/NingHeChuan.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/NingHeChuan.jpg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="-Verilog -ASIC," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么样的Verilog代码风格是好的风格？写代码是给别人看的。 关于Verilog代码设计的一些风格之前也写过，可以在订阅号搜索Verilog有什么奇技淫巧？ 模块化设计把所有的代码都写到一个模块里，也不是一个好的风格。 积累自己的小IP，在芯片设计阶段，就将功能模块划分仔细，划分清楚，可复用的功能做成一个可参数化IP。搭建起你的数字积木。 对齐把编辑器设置成tap自动替换成4个空格。 用空格对齐">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么样的Verilog代码风格是好的风格？">
+<meta property="og:url" content="http://yoursite.com/2020/05/11/2020-5-11-%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84Verilog%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC%E6%98%AF%E5%A5%BD%E7%9A%84%E9%A3%8E%E6%A0%BC%EF%BC%9F/index.html">
+<meta property="og:site_name" content="NingHeChuan">
+<meta property="og:description" content="什么样的Verilog代码风格是好的风格？写代码是给别人看的。 关于Verilog代码设计的一些风格之前也写过，可以在订阅号搜索Verilog有什么奇技淫巧？ 模块化设计把所有的代码都写到一个模块里，也不是一个好的风格。 积累自己的小IP，在芯片设计阶段，就将功能模块划分仔细，划分清楚，可复用的功能做成一个可参数化IP。搭建起你的数字积木。 对齐把编辑器设置成tap自动替换成4个空格。 用空格对齐">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/80789099-95693000-8bbd-11ea-9f0e-f94bef9ad842.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic//img/%E6%89%93%E6%8B%8D%E6%94%BE%E5%9C%A8%E6%A8%A1%E5%9D%97%E5%86%85.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic//img/%E5%85%88%E6%89%93%E6%8B%8D%E5%86%8D%E5%A4%8D%E7%94%A8.png">
+<meta property="article:published_time" content="2020-05-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-16T02:41:42.000Z">
+<meta property="article:author" content="NingHeChuan">
+<meta property="article:tag" content="-Verilog -ASIC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/27922538/80789099-95693000-8bbd-11ea-9f0e-f94bef9ad842.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/05/11/2020-5-11-什么样的Verilog代码风格是好的风格？/"/>
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7479026399840953",
+    enable_page_level_ads: true
+  });
+</script>
+  <title>什么样的Verilog代码风格是好的风格？ | NingHeChuan</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>	
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">NingHeChuan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个硅农的进阶之路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7479026399840953",
+    enable_page_level_ads: true
+  });
+</script>
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/11/2020-5-11-%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84Verilog%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC%E6%98%AF%E5%A5%BD%E7%9A%84%E9%A3%8E%E6%A0%BC%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="NingHeChuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/NingHeChuan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NingHeChuan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">什么样的Verilog代码风格是好的风格？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+		  
+		  
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-11T00:00:00+08:00">
+                2020-05-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ASIC/" itemprop="url" rel="index">
+                    <span itemprop="name">ASIC</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="什么样的Verilog代码风格是好的风格？"><a href="#什么样的Verilog代码风格是好的风格？" class="headerlink" title="什么样的Verilog代码风格是好的风格？"></a>什么样的Verilog代码风格是好的风格？</h1><p>写代码是给别人看的。</p>
+<p>关于Verilog代码设计的一些风格之前也写过，可以在订阅号搜索Verilog有什么奇技淫巧？</p>
+<h3 id="模块化设计"><a href="#模块化设计" class="headerlink" title="模块化设计"></a>模块化设计</h3><p>把所有的代码都写到一个模块里，也不是一个好的风格。</p>
+<p>积累自己的小IP，在芯片设计阶段，就将功能模块划分仔细，划分清楚，可复用的功能做成一个可参数化IP。搭建起你的数字积木。</p>
+<h3 id="对齐"><a href="#对齐" class="headerlink" title="对齐"></a>对齐</h3><p>把编辑器设置成tap自动替换成4个空格。</p>
+<p>用空格对齐代码，提高代码观赏性。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//case0</span></span><br><span class="line"><span class="keyword">input</span>                   clk;</span><br><span class="line"><span class="keyword">input</span>                   rst_n;</span><br><span class="line"><span class="keyword">inout</span>                   in;</span><br><span class="line"><span class="keyword">output</span>       [<span class="number">6</span>:<span class="number">0</span>]      out;</span><br><span class="line"><span class="comment">//case1</span></span><br><span class="line"><span class="keyword">input</span>                   clk		;</span><br><span class="line"><span class="keyword">input</span>                   rst_n	;</span><br><span class="line"><span class="keyword">inout</span>                   in		;</span><br><span class="line"><span class="keyword">output</span>       [<span class="number">6</span>:<span class="number">0</span>]      out		;</span><br></pre></td></tr></table></figure>
+
+<p>连分号也要对齐的对齐狂魔，大可不必，徒增功耗。</p>
+<p>关于提高Verilog代码编写效率的Gvim插件本订阅号之前也分享过，I/O端口按如上所示风格编写好后，直接可以生成端口列表。直接写assign和always块语句，也可以直接生成定义。省去手动定义的麻烦。</p>
+<h3 id="括号"><a href="#括号" class="headerlink" title="括号"></a>括号</h3><p>用括号将表达式的条件括起来，让层次关系更清晰，一些情况不括起来功能上也没有问题，但是会引起阅读者的歧义和可读性差。善用括号，避免阅读歧义和工具理解歧义。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> flag = cnt == <span class="number">2'd1</span> &amp;&amp; (mode != <span class="number">2'd1</span> &amp;&amp; (|v_shift) || cnt2 &lt; <span class="number">8'd15</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">assign</span> flag = (cnt == <span class="number">2'd1</span>) &amp;&amp; ((mode != <span class="number">2'd1</span>) &amp;&amp; (|v_shift) || (cnt2 &lt; <span class="number">8'd15</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="能少写则少写"><a href="#能少写则少写" class="headerlink" title="能少写则少写"></a>能少写则少写</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> rst_n) </span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(!rst_n) <span class="keyword">begin</span></span><br><span class="line">        out &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span> </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(en)<span class="keyword">begin</span></span><br><span class="line">        out &lt;= in;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        out &lt;= out;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> rst_n) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(!rst_n) </span><br><span class="line">        out &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(en)</span><br><span class="line">        out &lt;= in;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>只有单行语句可以省略去begin-end，一个always块只对一个变量操作。else分支如果是保持的话，可以省略。还有begin的位置…，能少写一行算一行。</p>
+<p>注意，在组合逻辑中else分支不写会产生锁存器，写成了保持就是组合逻辑环，这一点要和时序逻辑分开。时序逻辑中else分支不写代表保持。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @(*)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">case</span>(in[<span class="number">1</span>:<span class="number">0</span>])</span><br><span class="line">        <span class="number">2'd0</span> : data[<span class="number">1</span>:<span class="number">0</span>] = <span class="number">2'd0</span>;</span><br><span class="line">        <span class="number">2'd1</span> : data[<span class="number">1</span>:<span class="number">0</span>] = <span class="number">2'd1</span>;</span><br><span class="line">        <span class="number">2'd2</span> : data[<span class="number">1</span>:<span class="number">0</span>] = <span class="number">2'd2</span>;</span><br><span class="line">        <span class="keyword">default</span> : data[<span class="number">1</span>:<span class="number">0</span>] = <span class="number">2'd3</span>;</span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>case语句也一样，不写default分支会产生锁存器，如果case中的所有情况都达到，就可以不用写default分支，但在ASIC设计中可能工具会报lint，所以这样的写法是最完美的。</p>
+<h3 id="FSM"><a href="#FSM" class="headerlink" title="FSM"></a>FSM</h3><p>状态机采用用三段式</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/80789099-95693000-8bbd-11ea-9f0e-f94bef9ad842.png" alt="状态机编写技巧"></p>
+<p>小Tips，在写状态机时，将第二段需要保持状态循环的状态写法，写成这样的写法，可以省去很多else的分支。</p>
+<h3 id="assign语句慎用"><a href="#assign语句慎用" class="headerlink" title="assign语句慎用"></a>assign语句慎用</h3><p>assign语句+三目运算符/与或门逻辑慎用</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> data_out[<span class="number">5</span>:<span class="number">0</span>] = data_vld0 ? data0[<span class="number">5</span>:<span class="number">0</span>] :</span><br><span class="line">    data_vld1 ? data1[<span class="number">5</span>:<span class="number">0</span>] : </span><br><span class="line">    data_vld2 ? data2[<span class="number">5</span>:<span class="number">0</span>] : </span><br><span class="line">    data_vld3 ? data3[<span class="number">5</span>:<span class="number">0</span>] : <span class="number">6'b0</span>; </span><br><span class="line"></span><br><span class="line"><span class="keyword">assign</span> data_out[<span class="number">5</span>:<span class="number">0</span>] = (&#123;<span class="number">6</span>&#123;data_vld0&#125;&#125; &amp; data0[<span class="number">5</span>:<span class="number">0</span>])</span><br><span class="line">    | (&#123;<span class="number">6</span>&#123;data_vld1&#125;&#125; &amp; data1[<span class="number">5</span>:<span class="number">0</span>])</span><br><span class="line">    | (&#123;<span class="number">6</span>&#123;data_vld2&#125;&#125; &amp; data2[<span class="number">5</span>:<span class="number">0</span>])</span><br><span class="line">    | (&#123;<span class="number">6</span>&#123;data_vld0&#125;&#125; &amp; data3[<span class="number">5</span>:<span class="number">0</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>这两种写法一个带有优先级另一个不带优先级，本身没什么问题。不过覆盖率的expression中会将这个表达式中的所有条件满足与否列出来，其实很多情况是不可能出现的，比如这几个vld同时1，data为0的情况组合，但是这就需要designer一个个去waive掉，然后写出原因，选择的语句少了还好，但是如果非常多，waive起来工作量还是很大的，徒增功耗。</p>
+<p>这样的问题可在开发阶段就避免。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @(*)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(data_vld0) </span><br><span class="line">        data_out[<span class="number">5</span>:<span class="number">0</span>] = data0[<span class="number">5</span>:<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(data_vld1)</span><br><span class="line">        data_out[<span class="number">5</span>:<span class="number">0</span>] = data1[<span class="number">5</span>:<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(data_vld2)</span><br><span class="line">        data_out[<span class="number">5</span>:<span class="number">0</span>] = data2[<span class="number">5</span>:<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(data_vld3)</span><br><span class="line">        data_out[<span class="number">5</span>:<span class="number">0</span>] = data3[<span class="number">5</span>:<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        data_out[<span class="number">5</span>:<span class="number">0</span>] = <span class="number">6'd0</span>;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>写成这样，所有条件跑到就可以了。并行的语句用case。用与门和或门做的表达可能会省一些cell，但是比起后来waive时漫长的体力活，省这一毛两毛的干啥。</p>
+<p>看过一本书上的写法，将所有的组合逻辑都用assign做，把D触发器都做成IP，直接需要打拍的时候再调用。这样的思想很好，准确的将组合逻辑和时序逻辑分开，从代码到电路。</p>
+<p>作者提到另一个原因是由于if-else和case不能传播不定态，有的EDA工具有X态传播选项，可以强行传播，一般也需要license，但并不是所有的EDA工具都有这个功能。</p>
+<p>但是我个人（浅薄的）认为这样的风格不适合所有人。比如上面提到的覆盖率问题，还有代码的可读性问题，assign式的写法可读性会变差。</p>
+<p>直接在声明wire时就给变量赋值这样的写法，连spyglass都过不了。还是先声明再用吧。</p>
+<p>关于工具的license问题，看看公司怎么给解决。</p>
+<h3 id="乘法器分时复用"><a href="#乘法器分时复用" class="headerlink" title="乘法器分时复用"></a>乘法器分时复用</h3><p>一个设计要考虑PPA最优，就要考虑乘法器的数量多少以及复用能不能最大化，追求最好的设计是整个数据通路中乘法器空闲不下来。</p>
+<p>乘法器调用方法，一般是在乘法器的输入保证寄存器输入，结果输出到各个复用模块时打一拍再使用。可以做成在进行完乘法运算后，就打拍，这样消耗的寄存器会少很多。画个图意思一下（单bit）。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic//img/%E6%89%93%E6%8B%8D%E6%94%BE%E5%9C%A8%E6%A8%A1%E5%9D%97%E5%86%85.png" alt="模块内打拍"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic//img/%E5%85%88%E6%89%93%E6%8B%8D%E5%86%8D%E5%A4%8D%E7%94%A8.png" alt="打拍在使用"></p>
+<p>修改完后的寄存器省了很多，但是乘法器的输出寄存器负载会变大，不过后端综合时约束了max_fan_out工具会自动插buffer和复制寄存器，经过史册还是会节省很多面积，把一些优化工作可以交给工具去做，了解它，信任它，使用它。</p>
+<h3 id="数据位宽写全"><a href="#数据位宽写全" class="headerlink" title="数据位宽写全"></a>数据位宽写全</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> dout = din;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> rst_n)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(!rst_n)</span><br><span class="line">        dout[<span class="number">255</span>:<span class="number">0</span>] &lt;= <span class="number">'d0</span>;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        dout[<span class="number">255</span>:<span class="number">0</span>] &lt;= din;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>写成这样</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> dout[<span class="number">3</span>:<span class="number">0</span>] = din[<span class="number">3</span>:<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> rst_n)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(!rst_n)</span><br><span class="line">        dout[<span class="number">255</span>:<span class="number">0</span>] &lt;= <span class="number">256'd0</span>;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        dout[<span class="number">255</span>:<span class="number">0</span>] &lt;= din;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>写代码时将数据位宽写全，方便编辑器插件自动生成定义，而且写上位宽再后续阅读代码时能一眼看变量的位宽，提高阅读效率。</p>
+<p>寄存器赋初始值 ‘d0 ‘h0等等，功能应该没有问题，这样写工具会默认是最大32bit？？lint检查工具可能会报出来，最后还是得修改，不如一次到位。</p>
+<h3 id="良好的代码风格"><a href="#良好的代码风格" class="headerlink" title="良好的代码风格"></a>良好的代码风格</h3><p>写了这么多，总结一起，其实关于代码风格的问题，通过多看书，多看一些代码风格的写法，很多书上都有关于一些常见的风格阐述，多写代码多积累，最后形成自己的代码风格习惯，另外一般公司都会有代码规范的文档，到时候参加工作以后，一定要记得多读几遍。</p>
+<p>Talk is chip，show me the code。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/硅农.jpg" alt="NingHeChuan wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="NingHeChuan 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="NingHeChuan 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Verilog-ASIC/" rel="tag"><i class="fa fa-tag"></i> -Verilog -ASIC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/08/2020-5-9-SpinalHDL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="这个语言可能会革了Verilog HDL的命？">
+                <i class="fa fa-chevron-left"></i> 这个语言可能会革了Verilog HDL的命？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/31/2020-5-5-FPGA&ASIC%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7/" rel="prev" title="2020-5-5-FPGA&ASIC设计技巧">
+                2020-5-5-FPGA&ASIC设计技巧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/NingHeChuan.jpg"
+                alt="NingHeChuan" />
+            
+              <p class="site-author-name" itemprop="name">NingHeChuan</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/NingHeChuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ninghechuan@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/ninghechuan/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-custom zhihu"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/ninghechuan" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/ninghechuan" title="NingHeChuan博客园" target="_blank">NingHeChuan博客园</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://exasic.com/" title="ExASIC" target="_blank">ExASIC</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.unisoc.com/cn" title="紫光展锐" target="_blank">紫光展锐</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么样的Verilog代码风格是好的风格？"><span class="nav-number">1.</span> <span class="nav-text">什么样的Verilog代码风格是好的风格？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模块化设计"><span class="nav-number">1.0.1.</span> <span class="nav-text">模块化设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对齐"><span class="nav-number">1.0.2.</span> <span class="nav-text">对齐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#括号"><span class="nav-number">1.0.3.</span> <span class="nav-text">括号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#能少写则少写"><span class="nav-number">1.0.4.</span> <span class="nav-text">能少写则少写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FSM"><span class="nav-number">1.0.5.</span> <span class="nav-text">FSM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#assign语句慎用"><span class="nav-number">1.0.6.</span> <span class="nav-text">assign语句慎用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#乘法器分时复用"><span class="nav-number">1.0.7.</span> <span class="nav-text">乘法器分时复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据位宽写全"><span class="nav-number">1.0.8.</span> <span class="nav-text">数据位宽写全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#良好的代码风格"><span class="nav-number">1.0.9.</span> <span class="nav-text">良好的代码风格</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">NingHeChuan</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
