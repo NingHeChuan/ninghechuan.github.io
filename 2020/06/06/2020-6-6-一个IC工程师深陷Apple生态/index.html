@@ -79,16 +79,16 @@
 
 
 
-<meta name="description" content="一个IC工程师为什么深陷生态？安装开发环境首先在Mac上推荐先安装homebrew软件工具包。由于国内用户访问GitHub速度十分慢所以下面这个链接的主人把所有的安装源都换成国内的，而且做成了脚本可以一键安装。直接运行，awesome！ 1&#x2F;bin&#x2F;zsh -c &quot;$(curl -fsSL https:&#x2F;&#x2F;gitee.com&#x2F;cunkai&#x2F;HomebrewCN&#x2F;raw&#x2F;master&#x2F;Homebr">
+<meta name="description" content="一个IC工程师为什么深陷生态？我们都喜欢了用Windows和Linux进行开发，对于IC工程师的生产力工具，一提到Mac很多人就摇摇头。不过请不要忘了MacOS是基于Unix开发的，而作为生产力工具，Mac也一点不比Windows和Linux差，只不过因为很多EDA工具都是Linux和Windows下独有，生产力这个东西，你首先要思考的是你的生产力是什么，同样的在MacOS下也可以做Verilo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一个IC工程师为什么深陷生态？">
 <meta property="og:url" content="http://yoursite.com/2020/06/06/2020-6-6-%E4%B8%80%E4%B8%AAIC%E5%B7%A5%E7%A8%8B%E5%B8%88%E6%B7%B1%E9%99%B7Apple%E7%94%9F%E6%80%81/index.html">
 <meta property="og:site_name" content="NingHeChuan">
-<meta property="og:description" content="一个IC工程师为什么深陷生态？安装开发环境首先在Mac上推荐先安装homebrew软件工具包。由于国内用户访问GitHub速度十分慢所以下面这个链接的主人把所有的安装源都换成国内的，而且做成了脚本可以一键安装。直接运行，awesome！ 1&#x2F;bin&#x2F;zsh -c &quot;$(curl -fsSL https:&#x2F;&#x2F;gitee.com&#x2F;cunkai&#x2F;HomebrewCN&#x2F;raw&#x2F;master&#x2F;Homebr">
+<meta property="og:description" content="一个IC工程师为什么深陷生态？我们都喜欢了用Windows和Linux进行开发，对于IC工程师的生产力工具，一提到Mac很多人就摇摇头。不过请不要忘了MacOS是基于Unix开发的，而作为生产力工具，Mac也一点不比Windows和Linux差，只不过因为很多EDA工具都是Linux和Windows下独有，生产力这个东西，你首先要思考的是你的生产力是什么，同样的在MacOS下也可以做Verilo">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic/pic/%E6%89%93%E5%BC%80gtkwave.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic/pic/gtkwave%E8%B0%83%E8%AF%95.png">
 <meta property="article:published_time" content="2020-06-05T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-07T03:56:10.404Z">
+<meta property="article:modified_time" content="2020-06-07T11:48:20.369Z">
 <meta property="article:author" content="NingHeChuan">
 <meta property="article:tag" content="-ASIC">
 <meta name="twitter:card" content="summary">
@@ -412,20 +412,15 @@
       
 
       
-        <h1 id="一个IC工程师为什么深陷生态？"><a href="#一个IC工程师为什么深陷生态？" class="headerlink" title="一个IC工程师为什么深陷生态？"></a>一个IC工程师为什么深陷生态？</h1><h2 id="安装开发环境"><a href="#安装开发环境" class="headerlink" title="安装开发环境"></a>安装开发环境</h2><p>首先在Mac上推荐先安装homebrew软件工具包。由于国内用户访问GitHub速度十分慢所以下面这个链接的主人把所有的安装源都换成国内的，而且做成了脚本可以一键安装。直接运行，awesome！</p>
+        <h1 id="一个IC工程师为什么深陷生态？"><a href="#一个IC工程师为什么深陷生态？" class="headerlink" title="一个IC工程师为什么深陷生态？"></a>一个IC工程师为什么深陷生态？</h1><p>我们都喜欢了用Windows和Linux进行开发，对于IC工程师的生产力工具，一提到Mac很多人就摇摇头。不过请不要忘了MacOS是基于Unix开发的，而作为生产力工具，Mac也一点不比Windows和Linux差，只不过因为很多EDA工具都是Linux和Windows下独有，生产力这个东西，你首先要思考的是你的生产力是什么，同样的在MacOS下也可以做Verilog代码练习开发。</p>
+<h2 id="安装开发环境"><a href="#安装开发环境" class="headerlink" title="安装开发环境"></a>安装开发环境</h2><p>首先在Mac上推荐先安装homebrew软件工具包。由于国内用户访问GitHub速度十分慢所以下面这个链接的主人把所有的安装源都换成国内的，而且做成了脚本可以一键安装。直接运行，awesome！</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/zsh -c "$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)"</span><br></pre></td></tr></table></figure>
-
-
 
 <p>安装iverilog</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install icarus-verilog</span><br></pre></td></tr></table></figure>
 
-
-
 <p>安装gtkwave</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew cask install xquartz</span><br><span class="line">brew cask insatll gtkwave</span><br></pre></td></tr></table></figure>
-
-
 
 <p>如果想使用命令行运行gtkwave则需要进行一些配置，gtkwave安装好后可以一般直接运行gtkwave命令，但是如果安装Perl的Switch模块，会遇到错误。</p>
 <h3 id="安装Switch"><a href="#安装Switch" class="headerlink" title="安装Switch"></a>安装Switch</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cpan install Switch</span><br><span class="line">perl -V:'installsitelib'</span><br></pre></td></tr></table></figure>
@@ -456,6 +451,12 @@
 <p><img src="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic/pic/gtkwave%E8%B0%83%E8%AF%95.png" alt="gtkwave调试"></p>
 <p>软件很小，运行起来速度也非常快，做个小练习足够了。</p>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://ughe.github.io/2018/11/06/gtkwave-osx" target="_blank" rel="noopener">https://ughe.github.io/2018/11/06/gtkwave-osx</a></p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>当然，写这篇文章并不是说让大家换Mac，基本上FPGA开发工具和IC设计工具都在Linux和Windows下，如果你用Mac也免不了要使用虚拟机去。更或者你有服务器，直接远程桌面登陆，这时候其实用啥电脑都无所谓，能上网就行。</p>
+<p>对于MacOS最好用的就是它基于生态的一体性体验，我之前用Windows系统，经常用QQ传图片和文件，写一些文档和做一些视频，在手机上做的一些笔记，需要传到电脑上也是通过QQ。</p>
+<p>不过如果你身处在生态中，iCloud的同步功能，可以无缝同步手机、平板和电脑之间的数据，airdrop也可以直接非常迅速的传输文件和视频，手机或平板上复制的内容，可以直接通过iCloud同步在剪切板中，在平板或电脑上直接粘贴。向我的电脑现在都没装微信和QQ因为用不到，即使需要进行截图交流，可以直接在电脑上截屏，通过airdrop或剪切板传到手机上再用通讯软件发给别人。</p>
+<p>我是用Mac更多是做一些小练习，因为是在工作之余做一些事情，做一些大的工程的情况比较少，所以对于技术的需求，我完全满足，其实对于很多工作的工程师来说，他们回到家如果不打游戏也不回去打开电脑写代码，我也是。</p>
+<p>而我更多的是做一些文案和视频处理的工作，Windows平台不能给我带来高效的交互体验，记得有一次我剪辑一个视频，很多素材是从电脑上下载下来的，我想用iPad进行剪辑，我就需要把这些素材一个个传输到iPad上，然后再一个个下载下来，然后再倒入lumafusion中，这样的很多文案我也是通过QQ，这样十分低效。</p>
+<p>总的来说，如果你有全家桶，那么Mac给你带来的高效体验绝对是最好的，如果没有，那就看自己的需求，选择的自己喜欢的产品和设备。</p>
 
       
     </div>
@@ -721,7 +722,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一个IC工程师为什么深陷生态？"><span class="nav-number">1.</span> <span class="nav-text">一个IC工程师为什么深陷生态？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装开发环境"><span class="nav-number">1.1.</span> <span class="nav-text">安装开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Switch"><span class="nav-number">1.1.1.</span> <span class="nav-text">安装Switch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">1.1.2.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一个IC工程师为什么深陷生态？"><span class="nav-number">1.</span> <span class="nav-text">一个IC工程师为什么深陷生态？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装开发环境"><span class="nav-number">1.1.</span> <span class="nav-text">安装开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Switch"><span class="nav-number">1.1.1.</span> <span class="nav-text">安装Switch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">1.1.2.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后"><span class="nav-number">1.1.3.</span> <span class="nav-text">最后</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
