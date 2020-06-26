@@ -87,8 +87,9 @@
 <meta property="og:description" content="MacOS下也能做Verilog开发&#x2F;仿真&#x2F;综合Verilog代码编译全平台的EDA开源工具 代码编译icarus-verilog http:&#x2F;&#x2F;iverilog.icarus.com&#x2F; 代码编译仿真、Lint Verilator https:&#x2F;&#x2F;www.veripool.org&#x2F;wiki&#x2F;verilator&#x2F;Installing 仿真看波形gtkwave http:&#x2F;&#x2F;gtkwave.sourc">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic/pic/%E6%89%93%E5%BC%80gtkwave.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic/pic/gtkwave%E8%B0%83%E8%AF%95.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic/pic/counter.png">
 <meta property="article:published_time" content="2020-06-05T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-26T04:56:46.050Z">
+<meta property="article:modified_time" content="2020-06-26T16:39:58.898Z">
 <meta property="article:author" content="NingHeChuan">
 <meta property="article:tag" content="-ASIC -Verilog">
 <meta name="twitter:card" content="summary">
@@ -465,9 +466,31 @@
 <p>安装综合工具yosys。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install yosys</span><br></pre></td></tr></table></figure>
 
+<p>一段计数器代码</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> counter (clk, rst, en, count);</span><br><span class="line">   <span class="keyword">input</span> clk, rst, en;</span><br><span class="line">   <span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>] count;</span><br><span class="line">   <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk)</span><br><span class="line">      <span class="keyword">if</span> (rst)</span><br><span class="line">         count &lt;= <span class="number">4'd0</span>;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (en)</span><br><span class="line">         count &lt;= count + <span class="number">4'd1</span>;</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<p>综合命令</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># read <span class="keyword">design</span></span><br><span class="line">read_verilog counter<span class="variable">.v</span></span><br><span class="line">hierarchy -top counter</span><br><span class="line"># high-level synthesis</span><br><span class="line">proc; opt; fsm; opt; memory; opt; #techmap; opt;</span><br><span class="line">write_verilog synth<span class="variable">.v</span></span><br></pre></td></tr></table></figure>
+
+<p>将上述命令保存为show_rtl.ys文件，在终端下执行命令进行综合。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yosys show_rtl.ys</span><br></pre></td></tr></table></figure>
+
+<p>综合完成后会生成synth.v文件，这是综合后的网表。</p>
+<p>使用Graphviz来查看电路原理图，需要确保已经安装。没有安装的话用homebrew安装。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install graphviz</span><br></pre></td></tr></table></figure>
+
+<p>生成dot文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yosys -p "prep; show -stretch -prefix counter -format dot" counter.v</span><br></pre></td></tr></table></figure>
+
+<p>生成png图片</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dot counter.dot -T png -o counter.png</span><br></pre></td></tr></table></figure>
+
+<p>图片打开显示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic/pic/counter.png" alt="综合电路"></p>
 <p>综合的例子</p>
 <p><a href="http://www.clifford.at/yosys/screenshots.html" target="_blank" rel="noopener">http://www.clifford.at/yosys/screenshots.html</a></p>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://ughe.github.io/2018/11/06/gtkwave-osx" target="_blank" rel="noopener">https://ughe.github.io/2018/11/06/gtkwave-osx</a></p>
+<p><a href="https://stackoverflow.com/questions/36240998/visualizing-yosys-output-not-working" target="_blank" rel="noopener">https://stackoverflow.com/questions/36240998/visualizing-yosys-output-not-working</a></p>
 <h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3>
       
     </div>
