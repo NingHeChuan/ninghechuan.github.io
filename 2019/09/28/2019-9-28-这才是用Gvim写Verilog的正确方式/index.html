@@ -92,7 +92,7 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/27922538/65809025-b69f1380-e1cb-11e9-83d8-36fd97e017f4.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/27922538/65809027-b737aa00-e1cb-11e9-832a-6e423f6464ed.png">
 <meta property="article:published_time" content="2019-09-27T23:44:33.000Z">
-<meta property="article:modified_time" content="2020-04-24T12:59:08.000Z">
+<meta property="article:modified_time" content="2020-07-18T07:51:49.184Z">
 <meta property="article:author" content="NingHeChuan">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -437,34 +437,56 @@
 </li>
 <li><p>从git上下这个文件到本地</p>
 </li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/zhuzhzh/verilog_emacsauto.vim</span><br></pre></td></tr></table></figure>
-
-<ul>
+<li><pre><code class="shell">git clone https://github.com/zhuzhzh/verilog_emacsauto.vim</code></pre>
+</li>
+<li><ul>
 <li>把这个插件放在/home/xxx/.vim/plugin/verilog_emacsauto.vim，plugin这个文件夹默认是没有，可以自己新建一个。</li>
+</ul>
+</li>
+<li><ul>
 <li>然后打开verilog_emacsauto.vim里面的文件verilog_emacsauto.vim/plugin/systemverilog_emacs_auto.vim</li>
 <li>把其中所有的%.emacsautotmp全部替换成%.tmp.v</li>
 <li>把-l ~/.elisp/verilog-mode.el全部去掉</li>
 </ul>
-<p>没去掉之前是这个亚子的</p>
-<p><img src="https://user-images.githubusercontent.com/27922538/65809029-b737aa00-e1cb-11e9-882b-78e8723c4316.png" alt="修改vim配置文件"></p>
-<p>去掉之后是这个亚子的</p>
-<p><img src="https://user-images.githubusercontent.com/27922538/65809030-b7d04080-e1cb-11e9-862c-e2b2e21cc5d1.png" alt="修改vim配置文件完成"></p>
-<ul>
+</li>
+<li><p>没去掉之前是这个亚子的</p>
+</li>
+<li><p><img src="https://user-images.githubusercontent.com/27922538/65809029-b737aa00-e1cb-11e9-882b-78e8723c4316.png" alt="修改vim配置文件"></p>
+</li>
+<li><p>去掉之后是这个亚子的</p>
+</li>
+<li><p><img src="https://user-images.githubusercontent.com/27922538/65809030-b7d04080-e1cb-11e9-862c-e2b2e21cc5d1.png" alt="修改vim配置文件完成"></p>
+</li>
+<li><ul>
 <li>然后就大功告成了，还有图形界面可以使用</li>
 </ul>
-<p><img src="https://user-images.githubusercontent.com/27922538/65809028-b737aa00-e1cb-11e9-85ac-c5df656040e1.png" alt="vim插件使用图形界面"></p>
-<p>常用的就这几个，还有更多的自动化读者可以自己去本文开始的开发者网站探索。或者打开Emacs，菜单栏-Verilog-AUTO Help，</p>
-<p><img src="https://user-images.githubusercontent.com/27922538/65809024-b69f1380-e1cb-11e9-816a-8f20ec91c7f3.png" alt="auto-help"></p>
-<p>点击对应的auto会有下详细解释。</p>
-<p>我也试了一下，这个autowire和autoreg，只能对output和实例化的端口进行操作，直接写一个always块或assign，如果操作的变量，不在output或实例化端口中，也不会自动定义。本文开始的那段代码中的变量doutx就没有被自动定义。在Emacs-菜单栏-Verilog-AUTO Help中打开这两个auto的详细介绍，貌似就是这样的。所以读者在使用的过程中应该注意。</p>
-<p><img src="https://user-images.githubusercontent.com/27922538/65809025-b69f1380-e1cb-11e9-83d8-36fd97e017f4.png" alt="autoreg的限制"></p>
-<p><img src="https://user-images.githubusercontent.com/27922538/65809027-b737aa00-e1cb-11e9-832a-6e423f6464ed.png" alt="autowire限制"></p>
-<p>本操作只在RedHat下操作成功，其他平台感兴趣的读者可以自己试试，有人有疑惑为什么不直接用Emacs呢，这就是习惯，编辑器用习惯了其实也都一样，并不是要说哪个更好用。听说Sublime Text中也有类似这样的插件，不过编辑器这个东西，找个自己用的顺的，能跨多个平台的就可以了。</p>
-<p>关于写代码还有哪些便捷，提高效率的工具，欢迎留言区分享出来。</p>
-<p>感谢订阅号 ExASIC提供的这个方法，并帮助我进行配置修改。</p>
-<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p><a href="https://mp.weixin.qq.com/s/R-dzQ6xXnQ5YqUZTGPVO_A" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/R-dzQ6xXnQ5YqUZTGPVO_A</a></p>
-<p><a href="https://mp.weixin.qq.com/s/-gPn6g5E7tvPdjus_yZxFA" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/-gPn6g5E7tvPdjus_yZxFA</a></p>
+</li>
+<li><p><img src="https://user-images.githubusercontent.com/27922538/65809028-b737aa00-e1cb-11e9-85ac-c5df656040e1.png" alt="vim插件使用图形界面"></p>
+</li>
+<li><p>常用的就这几个，还有更多的自动化读者可以自己去本文开始的开发者网站探索。或者打开Emacs，菜单栏-Verilog-AUTO Help，</p>
+</li>
+<li><p><img src="https://user-images.githubusercontent.com/27922538/65809024-b69f1380-e1cb-11e9-816a-8f20ec91c7f3.png" alt="auto-help"></p>
+</li>
+<li><p>点击对应的auto会有下详细解释。</p>
+</li>
+<li><p>我也试了一下，这个autowire和autoreg，只能对output和实例化的端口进行操作，直接写一个always块或assign，如果操作的变量，不在output或实例化端口中，也不会自动定义。本文开始的那段代码中的变量doutx就没有被自动定义。在Emacs-菜单栏-Verilog-AUTO Help中打开这两个auto的详细介绍，貌似就是这样的。所以读者在使用的过程中应该注意。</p>
+</li>
+<li><p><img src="https://user-images.githubusercontent.com/27922538/65809025-b69f1380-e1cb-11e9-83d8-36fd97e017f4.png" alt="autoreg的限制"></p>
+</li>
+<li><p><img src="https://user-images.githubusercontent.com/27922538/65809027-b737aa00-e1cb-11e9-832a-6e423f6464ed.png" alt="autowire限制"></p>
+</li>
+<li><p>本操作只在RedHat下操作成功，其他平台感兴趣的读者可以自己试试，有人有疑惑为什么不直接用Emacs呢，这就是习惯，编辑器用习惯了其实也都一样，并不是要说哪个更好用。听说Sublime Text中也有类似这样的插件，不过编辑器这个东西，找个自己用的顺的，能跨多个平台的就可以了。</p>
+</li>
+<li><p>关于写代码还有哪些便捷，提高效率的工具，欢迎留言区分享出来。</p>
+</li>
+<li><p>感谢订阅号 ExASIC提供的这个方法，并帮助我进行配置修改。</p>
+</li>
+<li><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4></li>
+<li><p><a href="https://mp.weixin.qq.com/s/R-dzQ6xXnQ5YqUZTGPVO_A" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/R-dzQ6xXnQ5YqUZTGPVO_A</a></p>
+</li>
+<li><p><a href="https://mp.weixin.qq.com/s/-gPn6g5E7tvPdjus_yZxFA" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/-gPn6g5E7tvPdjus_yZxFA</a></p>
+</li>
+</ul>
 
       
     </div>
@@ -629,7 +651,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
