@@ -79,19 +79,25 @@
 
 
 
-<meta name="description" content="数的操作数的表示 数有有符号数和无符号数 表示形式有原码、反码、补码。 无符号数处理相对来说比较简单。 有符号数运算中负数通常用补码表示。 浮点数和定点数相比不常用。定点数的运算电路和普通数据无差别，要注意小数点的位置。有符号数处理需要注意数据的符号位。   有符号数比较器123456789101112131415function    [DATA_WIDTH-1:0] max_op;input">
+<meta name="description" content="如何优化一个设计？ASIC设计中详细设计方案的确定非常重要，同样的设计，别人可以用比你小30%的面积和少30%的处理时间来实现，这才是设计工程师的价值体现之处。 任何设计在最开始的时候都是一头雾水，场景复杂，各种耦合。我们要做的是将所有的场景都整理出来，然后想办法进行归一。任何一开始觉的不可能做到的任务最后都能找到解决方法。 这本来看似是没有规律的世界，但人类就是去不断寻找和发现这个物质世界的运行">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数的操作">
-<meta property="og:url" content="http://yoursite.com/2019/11/10/2019-11-10-%E6%95%B0%E7%9A%84%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:title" content="如何优化一个设计？">
+<meta property="og:url" content="http://yoursite.com/2020/09/13/2020-9-13-%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%E4%B8%80%E4%B8%AA%E8%AE%BE%E8%AE%A1/index.html">
 <meta property="og:site_name" content="NingHeChuan">
-<meta property="og:description" content="数的操作数的表示 数有有符号数和无符号数 表示形式有原码、反码、补码。 无符号数处理相对来说比较简单。 有符号数运算中负数通常用补码表示。 浮点数和定点数相比不常用。定点数的运算电路和普通数据无差别，要注意小数点的位置。有符号数处理需要注意数据的符号位。   有符号数比较器123456789101112131415function    [DATA_WIDTH-1:0] max_op;input">
-<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/69901051-f5616d80-13b6-11ea-98e2-196551e969e5.png">
-<meta property="article:published_time" content="2019-11-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2019-11-30T13:19:44.000Z">
+<meta property="og:description" content="如何优化一个设计？ASIC设计中详细设计方案的确定非常重要，同样的设计，别人可以用比你小30%的面积和少30%的处理时间来实现，这才是设计工程师的价值体现之处。 任何设计在最开始的时候都是一头雾水，场景复杂，各种耦合。我们要做的是将所有的场景都整理出来，然后想办法进行归一。任何一开始觉的不可能做到的任务最后都能找到解决方法。 这本来看似是没有规律的世界，但人类就是去不断寻找和发现这个物质世界的运行">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/77324138-4a076a80-6d51-11ea-9ca2-6b7f3a6a32b0.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/77324114-4378f300-6d51-11ea-8384-c958822f6068.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/77324136-48d63d80-6d51-11ea-85b3-0ee2d262d0be.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/77324119-4542b680-6d51-11ea-808d-85e7637c8ae8.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/27922538/77324123-45db4d00-6d51-11ea-95ba-7e82bc612c09.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic//img/%E6%89%93%E6%8B%8D%E6%94%BE%E5%9C%A8%E6%A8%A1%E5%9D%97%E5%86%85.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic//img/%E5%85%88%E6%89%93%E6%8B%8D%E5%86%8D%E5%A4%8D%E7%94%A8.png">
+<meta property="article:published_time" content="2020-09-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-13T05:53:52.145Z">
 <meta property="article:author" content="NingHeChuan">
 <meta property="article:tag" content="-Verilog -ASIC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://user-images.githubusercontent.com/27922538/69901051-f5616d80-13b6-11ea-98e2-196551e969e5.png">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/27922538/77324138-4a076a80-6d51-11ea-9ca2-6b7f3a6a32b0.png">
 
 
 
@@ -121,7 +127,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/11/10/2019-11-10-数的操作/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/09/13/2020-9-13-如何优化一个设计/"/>
 
 
 
@@ -134,7 +140,7 @@
     enable_page_level_ads: true
   });
 </script>
-  <title>数的操作 | NingHeChuan</title>
+  <title>如何优化一个设计？ | NingHeChuan</title>
   
 
 
@@ -320,7 +326,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/10/2019-11-10-%E6%95%B0%E7%9A%84%E6%93%8D%E4%BD%9C/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/13/2020-9-13-%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%E4%B8%80%E4%B8%AA%E8%AE%BE%E8%AE%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="NingHeChuan">
@@ -337,7 +343,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">数的操作</h1>
+          <h1 class="post-title" itemprop="name headline">如何优化一个设计？</h1>
         
 
         <div class="post-meta">
@@ -351,8 +357,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-10T00:00:00+08:00">
-                2019-11-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-13T00:00:00+08:00">
+                2020-09-13
               </time>
             
 
@@ -411,42 +417,38 @@
       
 
       
-        <h1 id="数的操作"><a href="#数的操作" class="headerlink" title="数的操作"></a>数的操作</h1><p>数的表示</p>
-<p>数有有符号数和无符号数</p>
-<p>表示形式有原码、反码、补码。</p>
-<p>无符号数处理相对来说比较简单。</p>
-<p>有符号数运算中负数通常用补码表示。</p>
-<p>浮点数和定点数相比不常用。定点数的运算电路和普通数据无差别，要注意小数点的位置。有符号数处理需要注意数据的符号位。</p>
-<img width="922" alt="8B39A5C117408A97EB6BE249E7FAA6DE" src="https://user-images.githubusercontent.com/27922538/69901051-f5616d80-13b6-11ea-98e2-196551e969e5.png">
-
-<h2 id="有符号数比较器"><a href="#有符号数比较器" class="headerlink" title="有符号数比较器"></a>有符号数比较器</h2><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span>    [DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>] max_op;</span><br><span class="line"><span class="keyword">input</span>   [DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>]   dat_op0;</span><br><span class="line"><span class="keyword">input</span>   [DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>]   dat_op1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">reg</span>    cmp_flag;</span><br><span class="line"><span class="keyword">if</span>(dat_op0[DATA_WIDTH-<span class="number">1</span>] != dat_op1[DATA_WIDTH-<span class="number">1</span>])<span class="keyword">begin</span></span><br><span class="line">    cmp_flag = dat_op0;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">    cmp_flag = (dat_op0[DATA_WIDTH-<span class="number">1</span>])? ((-dat_op0[DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>]) &gt; (-dat_op1[DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>])): (dat_op0[DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>] &lt; dat_op1[DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>]);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">max_op[DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>] = cmp_flag? dat_op1[DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>]: dat_op0[DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
-
-<p>还可以直接定义为signed，工具自动进行符号位扩展。</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> max_op[DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>] = (<span class="built_in">$signed</span>(dat_op1) &gt;= <span class="built_in">$signed</span>(dat_op0)? dat_op0[DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>]: dat_op1[DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>];</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="有符号数求绝对值"><a href="#有符号数求绝对值" class="headerlink" title="有符号数求绝对值"></a>有符号数求绝对值</h2><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> [DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>] dat_abs;</span><br><span class="line">    <span class="keyword">input</span> [DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>] dat_in;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">assign</span> dat_abs[DATA_WIDTH-<span class="number">1</span>:<span class="number">0</span>] = (dat_in[DATA_WIDTH-<span class="number">1</span>])? (-dat_in): dat_in;</span><br><span class="line"><span class="keyword">endfunction</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="有符号数加法器"><a href="#有符号数加法器" class="headerlink" title="有符号数加法器"></a>有符号数加法器</h2><p>进行符号位扩展。</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> dout[DATA_WIDTH:<span class="number">0</span>] = &#123;add_a[DATA_WIDTH-<span class="number">1</span>], add_a&#125; + &#123;add_b[DATA_WIDTH-<span class="number">1</span>], add_b&#125;;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="有符号数乘法器"><a href="#有符号数乘法器" class="headerlink" title="有符号数乘法器"></a>有符号数乘法器</h2><p>ASIC设计中通常调用DW库中的乘法器IP，有一天我不小心偷看了一眼，发现里面的乘法器直接写的数*号。嘘。</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @(*)<span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(tc)<span class="keyword">begin</span></span><br><span class="line">            dat_a_tmp[A_WIDTH-<span class="number">1</span>:<span class="number">0</span>] = dat_a[A_WIDTH-<span class="number">1</span>]? (-dat_a): dat_a;</span><br><span class="line">            dat_b_tmp[B_WIDTH-<span class="number">1</span>:<span class="number">0</span>] = dat_b[B_WIDTH-<span class="number">1</span>]? (-dat_b): dat_b;</span><br><span class="line">            product_tmp[PRODUCT_WIDTH-<span class="number">1</span>:<span class="number">0</span>] = dat_a_tmp * dat_b_tmp;</span><br><span class="line">            product[PRODUCT_WIDTH-<span class="number">1</span>:<span class="number">0</span>] = (dat_a[A_WIDTH-<span class="number">1</span>] ^ dat_b[B_WIDTH-<span class="number">1</span>])? (-product_tmp): product_tmp;   </span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            product[PRODUCT_WIDTH-<span class="number">1</span>:<span class="number">0</span>] = dat_a * dat_b;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>无符号数乘以常数，也直接用*号，例如a * 2‘d3，工具会帮你优化成 a &lt;&lt; 2’d1 + a。甚至可能优化得更好。（杠：不要过度依赖工具）。</p>
-<p>上面对于无符号数，有符号数应该注意符号位扩展。</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> product[A_WIDTH+<span class="number">1</span>:<span class="number">0</span>] = &#123;a[A_WIDTH-<span class="number">1</span>], a[A_WIDTH-<span class="number">1</span>:<span class="number">0</span>],<span class="number">1'd0</span>&#125; + &#123;&#123;<span class="number">2</span>&#123;a[A_WIDTH-<span class="number">1</span>]&#125;&#125;, a[A_WIDTH-<span class="number">1</span>:<span class="number">0</span>]&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>还可以直接定义为signed，工具自动进行符号位扩展。</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">input</span>   <span class="keyword">signed</span>  [A_WIDTH - <span class="number">1</span>:<span class="number">0</span>]     multa;</span><br><span class="line"><span class="keyword">input</span>   <span class="keyword">signed</span>  [B_WIDTH - <span class="number">1</span>:<span class="number">0</span>]     multb;</span><br><span class="line"><span class="keyword">output</span>  <span class="keyword">signed</span>  [C_WIDTH - <span class="number">1</span>:<span class="number">0</span>]     product;</span><br><span class="line"></span><br><span class="line"><span class="keyword">assign</span> product = multa * multb;</span><br><span class="line"></span><br><span class="line"><span class="keyword">input</span>     [A_WIDTH - <span class="number">1</span>:<span class="number">0</span>]     multa;</span><br><span class="line"><span class="keyword">input</span>     [B_WIDTH - <span class="number">1</span>:<span class="number">0</span>]     multb;</span><br><span class="line"><span class="keyword">output</span> <span class="keyword">signed</span> [C_WIDTH - <span class="number">1</span>:<span class="number">0</span>]     product;</span><br><span class="line"></span><br><span class="line"><span class="keyword">assign</span> product = <span class="built_in">$signed</span>(multa) * $sigend(multb);</span><br></pre></td></tr></table></figure>
-
-<p>哪种写法好？习惯了就行，最重要的是代码风格统一。不应该混用。</p>
-<p>人非圣贤，孰能无过，有错误请指点。将设计电路参数化可重复使用，构建自己的代码库，搭建起你的数字积木，本设计博主放在了GitHub上，可以在订阅号后台回复 “ip_lib”得到GitHub路径进行交流。</p>
+        <h1 id="如何优化一个设计？"><a href="#如何优化一个设计？" class="headerlink" title="如何优化一个设计？"></a>如何优化一个设计？</h1><p>ASIC设计中详细设计方案的确定非常重要，同样的设计，别人可以用比你小30%的面积和少30%的处理时间来实现，这才是设计工程师的价值体现之处。</p>
+<p>任何设计在最开始的时候都是一头雾水，场景复杂，各种耦合。我们要做的是将所有的场景都整理出来，然后想办法进行归一。任何一开始觉的不可能做到的任务最后都能找到解决方法。</p>
+<p>这本来看似是没有规律的世界，但人类就是去不断寻找和发现这个物质世界的运行规律。</p>
+<p>当然，即使第一版设计我们尽可能的考虑到了更多的场景和实现方案，但是最后实现阶段还是会有一些考虑不周全和不合理的实现，由于时间成本原因，决定放到下一版再修改。这个过程就叫做优化！那么，如何优化一个设计？</p>
+<h2 id="找大寄存器组"><a href="#找大寄存器组" class="headerlink" title="找大寄存器组"></a>找大寄存器组</h2><p>首先是找设计中的大寄存器组，寄存器是面积较大的基本单元了，寄存器的数量决定了设计整体的面积数量级。小容量的存储用regfile，一般寄存器组用到了上千bit，就要考虑是否用RAM，我见过上万bit的寄存器组。。。就是这样reg [16383:0] register。等一下，我还见过reg [32767:0] register。。</p>
+<p>每一个看到这个写法的工程师都会说出一句描述为粗鄙之语的惊叹。</p>
+<p>看到大寄存器组是要重点关注优化的对象，要注意的是，寄存器组是可以随意在任意bit取值的，RAM是需要一拍一拍的读取的，所以需要在高并行度和面积之前做折中（trade off）。</p>
+<p>数据通路寄存器打拍过多，肯定不合理，一个数据打一拍最起码是几十个bit，打多拍，就上百bit。而换一个设计思路，在控制上多少逻辑，控制信号+计数器，多做几组也就拢共几十个bit的样子。比如前一级模块传过来的数据和valid信号，数据是要晚几拍才使用，应该做成前一级模块先给valid信号，数据晚几拍再来，避免数据打拍。</p>
+<p>在数据通路上出现一些组合逻辑路径并不长，打了一拍，这样虽然时序会更好，但是最后增加的面积来说并不值得，所以多余的寄存器打拍完全可以“干”掉。</p>
+<h2 id="重定时"><a href="#重定时" class="headerlink" title="重定时"></a>重定时</h2><p>Retiming就是重新调整时序，例如电路中遇到复杂的组合逻辑，延迟过大，电路时序不满足，这个时候采用流水线技术，在组合逻辑中插入寄存器加流水线，进行操作，面积换速度思想。</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/77324138-4a076a80-6d51-11ea-9ca2-6b7f3a6a32b0.png" alt="组合逻辑等效"></p>
+<p>任何的数字电路都可以等效成组合逻辑加D触发器打拍，两个D触发器之间的组合逻辑路径决定了，系统的工作频率，决定芯片的性能。所以为了提高芯片的工作频率，使用流水线技术在组合逻辑中插入寄存器。</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/77324114-4378f300-6d51-11ea-8384-c958822f6068.png" alt="插入流水线"></p>
+<p>插入寄存器的位置需要慎重选择，不同的位置数据的打拍所消耗的寄存器的数量也不同，比方说你在位置a消耗25bit寄存器，位置b消耗20bit寄存器，能省则省。</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/77324136-48d63d80-6d51-11ea-85b3-0ee2d262d0be.png" alt="重定时"></p>
+<p>前面插入寄存器的位置使得comb1的延迟位30ns，comb2的延迟为10ns，系统的最高工作频率是由最长路径决定的。也就是说你这个系统最高工作频率的周期，不小于30ns，前面是插入pipeline，这个时候我们不改变时序，采用重定时技术，使得各个组合逻辑之间的延迟相当。</p>
+<h2 id="疯狂复用"><a href="#疯狂复用" class="headerlink" title="疯狂复用"></a>疯狂复用</h2><p>找计算逻辑相同的单元，复用</p>
+<p>最常见的就是计数器，能用一个计数器实现的，就别用俩，底层模块之间相同的逻辑尽量使用一块电路，减少重复的设计。</p>
+<p>基本逻辑单元的共享举例，面积：加法器 &gt; 比较器 &gt; 选择器。加比选。</p>
+<p>乘法器本质上也是全加器。</p>
+<p>所以就有先选后比，先选后加，先选后乘。</p>
+<p>画个图意思一下。</p>
+<p><img src="https://user-images.githubusercontent.com/27922538/77324119-4542b680-6d51-11ea-808d-85e7637c8ae8.png" alt="加法器"></p>
+<p><img src="https://user-images.githubusercontent.com/27922538/77324123-45db4d00-6d51-11ea-95ba-7e82bc612c09.png" alt="先选后加"></p>
+<p>这里的加法器可以换成任何逻辑或模块。</p>
+<h3 id="乘法器分时复用度提高"><a href="#乘法器分时复用度提高" class="headerlink" title="乘法器分时复用度提高"></a>乘法器分时复用度提高</h3><p>在计算模块中乘法器也是非常大的一部分逻辑，一个设计要考虑PPA最优，就要考虑乘法器的数量多少以及复用能不能最大化，追求最好的设计是整个数据通路中乘法器空闲不下来。</p>
+<p>乘法器调用方法，一般是在乘法器的输入保证寄存器输入，结果输出到各个复用模块时打一拍再使用。可以做成在进行完乘法运算后，就打拍，这样消耗的寄存器会少很多。画个图意思一下（单bit）。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic//img/%E6%89%93%E6%8B%8D%E6%94%BE%E5%9C%A8%E6%A8%A1%E5%9D%97%E5%86%85.png" alt="模块内打拍"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic//img/%E5%85%88%E6%89%93%E6%8B%8D%E5%86%8D%E5%A4%8D%E7%94%A8.png" alt="打拍在使用"></p>
+<p>修改完后的寄存器省了很多，但是乘法器的输出寄存器负载会变大，不过后端综合时约束了max_fan_out工具会自动插buffer和复制寄存器，经过史册还是会节省很多面积，把一些优化工作可以交给工具去做，了解它，信任它，使用它。</p>
+<h3 id="RAM的复用"><a href="#RAM的复用" class="headerlink" title="RAM的复用"></a>RAM的复用</h3><p>从设计的整体来看，RAM也可以复用，前面处理用过的ram，现在空下来，后面能否用。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>总结一下ASIC单个模块的设计/优化思路，列出所有条件，然后归一，复用，面积与速度呼唤的思想贯穿始终。这篇先整理到这里，下一篇见。</p>
 
       
     </div>
@@ -518,8 +520,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/11/10/2019-11-22-%E5%81%9A%E4%B8%80%E4%B8%AA%E6%96%B9%E4%BE%BF%E4%BB%BF%E7%9C%9F%E7%9A%84ROM/" rel="next" title="做一个方便仿真的ROM">
-                <i class="fa fa-chevron-left"></i> 做一个方便仿真的ROM
+              <a href="/2020/08/15/2020-8-15-%E5%81%9A%E4%B8%80%E9%A2%97%E8%8A%AF%E7%89%87%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E8%B4%B5/" rel="next" title="做一颗芯片为什么这么贵？">
+                <i class="fa fa-chevron-left"></i> 做一颗芯片为什么这么贵？
               </a>
             
           </div>
@@ -528,8 +530,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/02/18/2020-2-18-Verilog%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1%E4%B9%8B%20%E2%80%9C%E7%A5%9E%E7%B2%BE%E5%8C%A0%E5%B7%A5%E2%80%9D/" rel="prev" title="Verilog代码设计之 “神精匠工”">
-                Verilog代码设计之 “神精匠工” <i class="fa fa-chevron-right"></i>
+              <a href="/2021/01/01/2021-1-1-%E7%B4%AB%E5%85%89%E5%B1%95%E9%94%90%E7%9A%84%E8%8A%AF%E7%89%87%E5%88%B0%E5%BA%95%E4%BB%80%E4%B9%88%E6%B0%B4%E5%B9%B3%EF%BC%9F/" rel="prev" title="紫光展锐的芯片到底什么水平？">
+                紫光展锐的芯片到底什么水平？ <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -716,7 +718,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数的操作"><span class="nav-number">1.</span> <span class="nav-text">数的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#有符号数比较器"><span class="nav-number">1.1.</span> <span class="nav-text">有符号数比较器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有符号数求绝对值"><span class="nav-number">1.2.</span> <span class="nav-text">有符号数求绝对值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有符号数加法器"><span class="nav-number">1.3.</span> <span class="nav-text">有符号数加法器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有符号数乘法器"><span class="nav-number">1.4.</span> <span class="nav-text">有符号数乘法器</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#如何优化一个设计？"><span class="nav-number">1.</span> <span class="nav-text">如何优化一个设计？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#找大寄存器组"><span class="nav-number">1.1.</span> <span class="nav-text">找大寄存器组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重定时"><span class="nav-number">1.2.</span> <span class="nav-text">重定时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#疯狂复用"><span class="nav-number">1.3.</span> <span class="nav-text">疯狂复用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#乘法器分时复用度提高"><span class="nav-number">1.3.1.</span> <span class="nav-text">乘法器分时复用度提高</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RAM的复用"><span class="nav-number">1.3.2.</span> <span class="nav-text">RAM的复用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">1.4.</span> <span class="nav-text">最后</span></a></li></ol></li></ol></div>
             
 
           </div>
