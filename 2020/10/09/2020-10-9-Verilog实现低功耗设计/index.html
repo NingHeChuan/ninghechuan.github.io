@@ -79,19 +79,17 @@
 
 
 
-<meta name="description" content="Verilog会被淘汰吗？HLS也做了很多年了，在FPGA领域甚至还有一些应用，但是在ASIC领域还主要是Verilog，而且主流的ASIC设计EDA厂商也不会很积极支持，与其说HLS替代，还不如说Chisel更有可能，不过还是面临主流EDA厂商是否积极支持问题。 Chisel这样用直接生成Verilog的方案，对于一些特定功能的IP可以使用，经过验证过的可以缩短芯片的开发周期，而且主流的EDA工">
+<meta name="description" content="Verilog实现低功耗设计？数据通路寄存器打拍不加复位数据寄存器打拍带上vld，不加复位逻辑，这样会省去寄存器复位电路的布线面积，而且工具还会给寄存器插自动插时钟门控，还达到了降低功耗的效果。 至于寄存器不复位，一些刚学习的朋友可能会感觉有些刷新认知，寄存器怎么能不复位，不复位不就是x态了，系统不久紊乱了。是的，寄存器不复位是会产生x态，不过这里说的是数据通路，控制通路的所有信号都是必须带复位逻">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Verilog会被淘汰吗？">
-<meta property="og:url" content="http://yoursite.com/2020/06/07/2020-6-7-Verilog%E4%BC%9A%E8%A2%AB%E6%B7%98%E6%B1%B0%E5%90%97%EF%BC%9F/index.html">
+<meta property="og:title" content="Verilog实现低功耗设计？">
+<meta property="og:url" content="http://yoursite.com/2020/10/09/2020-10-9-Verilog%E5%AE%9E%E7%8E%B0%E4%BD%8E%E5%8A%9F%E8%80%97%E8%AE%BE%E8%AE%A1/index.html">
 <meta property="og:site_name" content="NingHeChuan">
-<meta property="og:description" content="Verilog会被淘汰吗？HLS也做了很多年了，在FPGA领域甚至还有一些应用，但是在ASIC领域还主要是Verilog，而且主流的ASIC设计EDA厂商也不会很积极支持，与其说HLS替代，还不如说Chisel更有可能，不过还是面临主流EDA厂商是否积极支持问题。 Chisel这样用直接生成Verilog的方案，对于一些特定功能的IP可以使用，经过验证过的可以缩短芯片的开发周期，而且主流的EDA工">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic/pic/%E8%BF%90%E8%A1%8Cscala.png">
-<meta property="article:published_time" content="2020-06-06T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-27T00:57:49.019Z">
+<meta property="og:description" content="Verilog实现低功耗设计？数据通路寄存器打拍不加复位数据寄存器打拍带上vld，不加复位逻辑，这样会省去寄存器复位电路的布线面积，而且工具还会给寄存器插自动插时钟门控，还达到了降低功耗的效果。 至于寄存器不复位，一些刚学习的朋友可能会感觉有些刷新认知，寄存器怎么能不复位，不复位不就是x态了，系统不久紊乱了。是的，寄存器不复位是会产生x态，不过这里说的是数据通路，控制通路的所有信号都是必须带复位逻">
+<meta property="article:published_time" content="2020-10-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-10-09T15:13:17.925Z">
 <meta property="article:author" content="NingHeChuan">
 <meta property="article:tag" content="-Verilog -ASIC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic/pic/%E8%BF%90%E8%A1%8Cscala.png">
 
 
 
@@ -121,7 +119,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/06/07/2020-6-7-Verilog会被淘汰吗？/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/10/09/2020-10-9-Verilog实现低功耗设计/"/>
 
 
 
@@ -134,7 +132,7 @@
     enable_page_level_ads: true
   });
 </script>
-  <title>Verilog会被淘汰吗？ | NingHeChuan</title>
+  <title>Verilog实现低功耗设计？ | NingHeChuan</title>
   
 
 
@@ -320,7 +318,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/07/2020-6-7-Verilog%E4%BC%9A%E8%A2%AB%E6%B7%98%E6%B1%B0%E5%90%97%EF%BC%9F/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/09/2020-10-9-Verilog%E5%AE%9E%E7%8E%B0%E4%BD%8E%E5%8A%9F%E8%80%97%E8%AE%BE%E8%AE%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="NingHeChuan">
@@ -337,7 +335,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Verilog会被淘汰吗？</h1>
+          <h1 class="post-title" itemprop="name headline">Verilog实现低功耗设计？</h1>
         
 
         <div class="post-meta">
@@ -351,8 +349,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-07T00:00:00+08:00">
-                2020-06-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-09T00:00:00+08:00">
+                2020-10-09
               </time>
             
 
@@ -411,43 +409,18 @@
       
 
       
-        <h1 id="Verilog会被淘汰吗？"><a href="#Verilog会被淘汰吗？" class="headerlink" title="Verilog会被淘汰吗？"></a>Verilog会被淘汰吗？</h1><p>HLS也做了很多年了，在FPGA领域甚至还有一些应用，但是在ASIC领域还主要是Verilog，而且主流的ASIC设计EDA厂商也不会很积极支持，与其说HLS替代，还不如说Chisel更有可能，不过还是面临主流EDA厂商是否积极支持问题。</p>
-<p>Chisel这样用直接生成Verilog的方案，对于一些特定功能的IP可以使用，经过验证过的可以缩短芯片的开发周期，而且主流的EDA工具后续的开发流程也完全适用。Chisel家族也更接近硬件的设计思维方式。</p>
-<p>Chisel在RSIC-V上风光了一把，但是对于传统的ASIC设计流程，目前各种方法学，已经非常完善了，ASIC设计更像是一种模式设计，从功能制定到最终流片及验证，完全遵循业内公认的设计方法学，芯片必然能够成功。</p>
-<p>直接打破积累了多少年的开发流程和经验，还有前人踩过了那么多的坑。当然是很难了。要说替代，我更愿意相信是Chisel这类的HDL语言，Chisel不是未来，也至少是未来的一站。</p>
-<p>Chisel家族还有一个叫Spinal HDL的，文档也非常完善。可以了解下。是一个工程师开发的，和高校出品的Chisel还是有些不同的，更偏向工程化思维。</p>
-<p><a href="https://spinalhdl.github.io/SpinalDoc-RTD/index.html" target="_blank" rel="noopener">https://spinalhdl.github.io/SpinalDoc-RTD/index.html</a></p>
-<p>看到有朋友用HLS和Verilog的比较来类比C语言和汇编语言，个人认为这样的类比不是很合理，C语言和汇编语言的关系，应该是Verilog和门级网表/手绘数字电路图来类比比较。HLS/Chisel/Spinal HDL和Verilog的关系，用Python和C语言的关系比较，是不是更形象一些？</p>
-<p>将SpinalHDL和Verilog进行比较，类比成，汇编语言和C语言比较，我倒觉得应该用C语言和Python来比较。汇编语言过于老以致于应该用手动画电路图和汇编语言比较。人生苦短，快用SpinalHDL。</p>
-<h3 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h3><p>SpinalHDL是一个用Scala编写的硬件描述语言，需要Java虚拟机（JVM）环境</p>
-<h4 id="安装Java-JDK"><a href="#安装Java-JDK" class="headerlink" title="安装Java JDK"></a>安装Java JDK</h4><p>官网<a href="https://www.oracle.com/java/technologies/javase-jdk8-downloads.html" target="_blank" rel="noopener">https://www.oracle.com/java/technologies/javase-jdk8-downloads.html</a></p>
-<p>直接用下载<a href="https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_windows-x64_bin.zip" target="_blank" rel="noopener">https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_windows-x64_bin.zip</a></p>
-<p>解压下载的文件你想指定的安装目录</p>
-<p>配置环境变量，各个系统自行Google解决。</p>
-<p>在命令行窗口输入java -version，安装成功会打印如下信息。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java 12.0.1 2019-04-16</span><br><span class="line">Java(TM) SE Runtime Environment (build 12.0.1+12)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 12.0.1+12, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
-
-<h4 id="安装IntelliJ-IDEA"><a href="#安装IntelliJ-IDEA" class="headerlink" title="安装IntelliJ IDEA"></a>安装IntelliJ IDEA</h4><p><a href="https://scala-lang.org/download/" target="_blank" rel="noopener">https://scala-lang.org/download/</a></p>
-<p><a href="https://www.scala-sbt.org/download.html" target="_blank" rel="noopener">https://www.scala-sbt.org/download.html</a></p>
-<p>安装好Scala</p>
-<p>安装好IntelliJ IDE</p>
-<p>下载一个简单的demo</p>
-<p><a href="https://codeload.github.com/SpinalHDL/SpinalTemplateSbt/zip/master" target="_blank" rel="noopener">https://codeload.github.com/SpinalHDL/SpinalTemplateSbt/zip/master</a></p>
-<p>打开IntelliJ IDEA，打开工程</p>
-<p>配置Java JDK和Scala环境，Java JDK一般会自动加载，Scala需要手动指定到相关目录</p>
-<p>加载插件教程</p>
-<p><a href="https://www.jetbrains.com/help/idea/2016.1/enabling-and-disabling-plugins.html?origin=old_help" target="_blank" rel="noopener">https://www.jetbrains.com/help/idea/2016.1/enabling-and-disabling-plugins.html?origin=old_help</a></p>
-<p>第一次打开demo要加载很多依赖，耐心等待，不要打断。</p>
-<p>点击到我如图所示的这一级双击文件，右键点击文件运行。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic/pic/%E8%BF%90%E8%A1%8Cscala.png" alt="运行scala"></p>
-<p>运行第一个demo</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> mylib</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> spinal.core._</span><br><span class="line"><span class="keyword">import</span> spinal.lib._</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> scala.util.<span class="type">Random</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Hardware definition</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTopLevel</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  	<span class="keyword">val</span> io = <span class="keyword">new</span> <span class="type">Bundle</span> &#123;</span><br><span class="line">    <span class="keyword">val</span> cond0 = in  <span class="type">Bool</span></span><br><span class="line">    <span class="keyword">val</span> cond1 = in  <span class="type">Bool</span></span><br><span class="line">    <span class="keyword">val</span> flag  = out <span class="type">Bool</span></span><br><span class="line">    <span class="keyword">val</span> state = out <span class="type">UInt</span>(<span class="number">8</span> bits)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">val</span> counter = <span class="type">Reg</span>(<span class="type">UInt</span>(<span class="number">8</span> bits)) init(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  when(io.cond0)&#123;</span><br><span class="line">    counter := counter + <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  io.state := counter</span><br><span class="line">  io.flag  := (counter === <span class="number">0</span>) | io.cond1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Generate the MyTopLevel's Verilog</span></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">MyTopLevelVerilog</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span><br><span class="line">    <span class="type">SpinalVerilog</span>(<span class="keyword">new</span> <span class="type">MyTopLevel</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Generate the MyTopLevel's VHDL</span></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">MyTopLevelVhdl</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span><br><span class="line">    <span class="type">SpinalVhdl</span>(<span class="keyword">new</span> <span class="type">MyTopLevel</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//Define a custom SpinalHDL configuration with synchronous reset instead of the default asynchronous one. This configuration can be resued everywhere</span></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">MySpinalConfig</span> <span class="keyword">extends</span> <span class="title">SpinalConfig</span>(<span class="params">defaultConfigForClockDomains = <span class="type">ClockDomainConfig</span>(resetKind = <span class="type">SYNC</span></span>))</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">//Generate</span> <span class="title">the</span> <span class="title">MyTopLevel</span>'<span class="title">s</span> <span class="title">Verilog</span> <span class="title">using</span> <span class="title">the</span> <span class="title">above</span> <span class="title">custom</span> <span class="title">configuration</span>.</span></span><br><span class="line"><span class="class"><span class="title">object</span> <span class="title">MyTopLevelVerilogWithCustomConfig</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span><br><span class="line">    <span class="type">MySpinalConfig</span>.generateVerilog(<span class="keyword">new</span> <span class="type">MyTopLevel</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>点击运行生成的Verilog代码</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> MyTopLevel (</span><br><span class="line">  <span class="keyword">input</span>               io_cond0,</span><br><span class="line">  <span class="keyword">input</span>               io_cond1,</span><br><span class="line">  <span class="keyword">output</span>              io_flag,</span><br><span class="line">  <span class="keyword">output</span>     [<span class="number">7</span>:<span class="number">0</span>]    io_state,</span><br><span class="line">  <span class="keyword">input</span>               clk,</span><br><span class="line">  <span class="keyword">input</span>               reset </span><br><span class="line">);</span><br><span class="line">  <span class="keyword">reg</span>        [<span class="number">7</span>:<span class="number">0</span>]    counter;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">assign</span> io_state = counter;</span><br><span class="line">  <span class="keyword">assign</span> io_flag = ((counter == <span class="number">8'h0</span>) || io_cond1);</span><br><span class="line">  <span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> reset) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">      counter &lt;= <span class="number">8'h0</span>;</span><br><span class="line">    <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">      <span class="keyword">if</span>(io_cond0)<span class="keyword">begin</span></span><br><span class="line">        counter &lt;= (counter + <span class="number">8'h01</span>);</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+        <h1 id="Verilog实现低功耗设计？"><a href="#Verilog实现低功耗设计？" class="headerlink" title="Verilog实现低功耗设计？"></a>Verilog实现低功耗设计？</h1><h2 id="数据通路寄存器打拍不加复位"><a href="#数据通路寄存器打拍不加复位" class="headerlink" title="数据通路寄存器打拍不加复位"></a>数据通路寄存器打拍不加复位</h2><p>数据寄存器打拍带上vld，不加复位逻辑，这样会省去寄存器复位电路的布线面积，而且工具还会给寄存器插自动插时钟门控，还达到了降低功耗的效果。</p>
+<p>至于寄存器不复位，一些刚学习的朋友可能会感觉有些刷新认知，寄存器怎么能不复位，不复位不就是x态了，系统不久紊乱了。是的，寄存器不复位是会产生x态，不过这里说的是数据通路，控制通路的所有信号都是必须带复位逻辑。数据通路因为这里是带着vld进行打拍，只需要保证在你使用的时候，它不是x态就行了。控制通路的信号控制系统的运行，出现x态，必然挂死。而数据通路只要保证在vld的有效，也就是我踩这个数据的时候它是正确的就行了，不管它是x态还是其他无效的数据。</p>
+<p>当然如果数据有作为判断逻辑用于控制，那这个数据一定要进行复位。</p>
+<p>代码示例，时序逻辑可以省略else，寄存器默认保持，组合逻辑必须写else。vld是一个脉冲这个数据踹一脚直接踹进这个寄存器存储，在下一脚来临之前，这个寄存器都将保持这个数据。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk)<span class="keyword">begin</span></span><br><span class="line">  <span class="keyword">if</span>(data_vld)</span><br><span class="line">    dout[<span class="number">63</span>:<span class="number">0</span>] &lt;= din;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
 
 
+<h2 id="手动插入时钟门控"><a href="#手动插入时钟门控" class="headerlink" title="手动插入时钟门控"></a>手动插入时钟门控</h2><p>手动插入时钟门控，（门控的手动开关）门控留有软件的控制通道。</p>
+<h2 id="整个模块掉电"><a href="#整个模块掉电" class="headerlink" title="整个模块掉电"></a>整个模块掉电</h2><p>整个模块掉电，掉电后将所有需要保存的数据写到memory中，要注意有些数据后面可能还要用，需要使用和保存的寄存器较少，可以伸出接口，让软件读走，下一次模块上电启动时再配置回来。</p>
+<h2 id="静态功耗和动态功耗"><a href="#静态功耗和动态功耗" class="headerlink" title="静态功耗和动态功耗"></a>静态功耗和动态功耗</h2><p>乘法器、加法器等运算单元，组合逻辑是否存在无效翻转。静态功耗和动态功耗。</p>
+<p>输入到输出，组合逻辑的a端值不变，没有电平翻转，所以不会有动态功耗，只存在静态功耗。</p>
 
       
     </div>
@@ -519,8 +492,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/06/06/2020-6-6-MacOS%E4%B8%8B%E4%B9%9F%E8%83%BD%E5%81%9AVerilog%E5%BC%80%E5%8F%91%E4%BB%BF%E7%9C%9F%E7%BB%BC%E5%90%88/" rel="next" title="MacOS下也能做Verilog开发/仿真/综合">
-                <i class="fa fa-chevron-left"></i> MacOS下也能做Verilog开发/仿真/综合
+              <a href="/2020/09/13/2020-9-13-%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%E4%B8%80%E4%B8%AA%E8%AE%BE%E8%AE%A1/" rel="next" title="如何优化一个设计？">
+                <i class="fa fa-chevron-left"></i> 如何优化一个设计？
               </a>
             
           </div>
@@ -529,8 +502,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/06/10/2020-6-10-%E6%95%B0%E5%AD%97IC%E8%AE%BE%E8%AE%A1%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E4%B8%80%E5%A4%A9%E6%98%AF%E6%80%8E%E4%B9%88%E6%A0%B7%E7%9A%84/" rel="prev" title="数字IC设计工程师的一天是怎么样的？">
-                数字IC设计工程师的一天是怎么样的？ <i class="fa fa-chevron-right"></i>
+              <a href="/2021/01/01/2021-1-1-%E7%B4%AB%E5%85%89%E5%B1%95%E9%94%90%E7%9A%84%E8%8A%AF%E7%89%87%E5%88%B0%E5%BA%95%E4%BB%80%E4%B9%88%E6%B0%B4%E5%B9%B3%EF%BC%9F/" rel="prev" title="紫光展锐的芯片到底什么水平？">
+                紫光展锐的芯片到底什么水平？ <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -717,7 +690,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Verilog会被淘汰吗？"><span class="nav-number">1.</span> <span class="nav-text">Verilog会被淘汰吗？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境安装"><span class="nav-number">1.0.1.</span> <span class="nav-text">环境安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Java-JDK"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">安装Java JDK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装IntelliJ-IDEA"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">安装IntelliJ IDEA</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Verilog实现低功耗设计？"><span class="nav-number">1.</span> <span class="nav-text">Verilog实现低功耗设计？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据通路寄存器打拍不加复位"><span class="nav-number">1.1.</span> <span class="nav-text">数据通路寄存器打拍不加复位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手动插入时钟门控"><span class="nav-number">1.2.</span> <span class="nav-text">手动插入时钟门控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整个模块掉电"><span class="nav-number">1.3.</span> <span class="nav-text">整个模块掉电</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态功耗和动态功耗"><span class="nav-number">1.4.</span> <span class="nav-text">静态功耗和动态功耗</span></a></li></ol></li></ol></div>
             
 
           </div>
