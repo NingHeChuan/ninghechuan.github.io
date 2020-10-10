@@ -79,17 +79,19 @@
 
 
 
-<meta name="description" content="Verilog实现低功耗设计？数据通路寄存器打拍不加复位数据寄存器打拍带上vld，不加复位逻辑，这样会省去寄存器复位电路的布线面积，而且工具还会给寄存器插自动插时钟门控，还达到了降低功耗的效果。 至于寄存器不复位，一些刚学习的朋友可能会感觉有些刷新认知，寄存器怎么能不复位，不复位不就是x态了，系统不久紊乱了。是的，寄存器不复位是会产生x态，不过这里说的是数据通路，控制通路的所有信号都是必须带复位逻">
+<meta name="description" content="Verilog如何实现低功耗设计？做芯片第一应该关注的是芯片的PPA（Performance， Power， Area），本篇浅显的部分讨论，第二个 P，Power功耗，在RTL设计中如何做到低功耗设计，对于移动设备续航的十分重要，不要让你的芯片徒增功耗。 数据通路寄存器打拍不加复位数据寄存器打拍带上vld，不加复位逻辑，这样会省去寄存器复位电路的布线面积，而且工具还会给寄存器插自动插时钟门控，还">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Verilog实现低功耗设计？">
 <meta property="og:url" content="http://yoursite.com/2020/10/09/2020-10-9-Verilog%E5%AE%9E%E7%8E%B0%E4%BD%8E%E5%8A%9F%E8%80%97%E8%AE%BE%E8%AE%A1/index.html">
 <meta property="og:site_name" content="NingHeChuan">
-<meta property="og:description" content="Verilog实现低功耗设计？数据通路寄存器打拍不加复位数据寄存器打拍带上vld，不加复位逻辑，这样会省去寄存器复位电路的布线面积，而且工具还会给寄存器插自动插时钟门控，还达到了降低功耗的效果。 至于寄存器不复位，一些刚学习的朋友可能会感觉有些刷新认知，寄存器怎么能不复位，不复位不就是x态了，系统不久紊乱了。是的，寄存器不复位是会产生x态，不过这里说的是数据通路，控制通路的所有信号都是必须带复位逻">
+<meta property="og:description" content="Verilog如何实现低功耗设计？做芯片第一应该关注的是芯片的PPA（Performance， Power， Area），本篇浅显的部分讨论，第二个 P，Power功耗，在RTL设计中如何做到低功耗设计，对于移动设备续航的十分重要，不要让你的芯片徒增功耗。 数据通路寄存器打拍不加复位数据寄存器打拍带上vld，不加复位逻辑，这样会省去寄存器复位电路的布线面积，而且工具还会给寄存器插自动插时钟门控，还">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic/pic/%E5%8A%A8%E6%80%81%E5%8A%9F%E8%80%97.png">
 <meta property="article:published_time" content="2020-10-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-10-09T15:13:17.925Z">
+<meta property="article:modified_time" content="2020-10-10T13:33:32.132Z">
 <meta property="article:author" content="NingHeChuan">
 <meta property="article:tag" content="-Verilog -ASIC">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic/pic/%E5%8A%A8%E6%80%81%E5%8A%9F%E8%80%97.png">
 
 
 
@@ -409,18 +411,22 @@
       
 
       
-        <h1 id="Verilog实现低功耗设计？"><a href="#Verilog实现低功耗设计？" class="headerlink" title="Verilog实现低功耗设计？"></a>Verilog实现低功耗设计？</h1><h2 id="数据通路寄存器打拍不加复位"><a href="#数据通路寄存器打拍不加复位" class="headerlink" title="数据通路寄存器打拍不加复位"></a>数据通路寄存器打拍不加复位</h2><p>数据寄存器打拍带上vld，不加复位逻辑，这样会省去寄存器复位电路的布线面积，而且工具还会给寄存器插自动插时钟门控，还达到了降低功耗的效果。</p>
-<p>至于寄存器不复位，一些刚学习的朋友可能会感觉有些刷新认知，寄存器怎么能不复位，不复位不就是x态了，系统不久紊乱了。是的，寄存器不复位是会产生x态，不过这里说的是数据通路，控制通路的所有信号都是必须带复位逻辑。数据通路因为这里是带着vld进行打拍，只需要保证在你使用的时候，它不是x态就行了。控制通路的信号控制系统的运行，出现x态，必然挂死。而数据通路只要保证在vld的有效，也就是我踩这个数据的时候它是正确的就行了，不管它是x态还是其他无效的数据。</p>
+        <h1 id="Verilog如何实现低功耗设计？"><a href="#Verilog如何实现低功耗设计？" class="headerlink" title="Verilog如何实现低功耗设计？"></a>Verilog如何实现低功耗设计？</h1><p>做芯片第一应该关注的是芯片的PPA（Performance， Power， Area），本篇浅显的部分讨论，第二个 P，Power功耗，在RTL设计中如何做到低功耗设计，对于移动设备续航的十分重要，不要让你的芯片徒增功耗。</p>
+<h2 id="数据通路寄存器打拍不加复位"><a href="#数据通路寄存器打拍不加复位" class="headerlink" title="数据通路寄存器打拍不加复位"></a>数据通路寄存器打拍不加复位</h2><p>数据寄存器打拍带上vld，不加复位逻辑，这样会省去寄存器复位电路的布线面积，而且工具还会给寄存器插自动插时钟门控，还达到了降低功耗的效果。</p>
+<p>至于寄存器不复位，一些刚学习的朋友可能会感觉有些刷新认知，寄存器怎么能不复位，不复位不就是x态了，系统不就紊乱了。是的，寄存器不复位是会产生x态，不过这里说的是数据通路，控制通路的所有信号都是必须带复位逻辑。数据通路因为这里是带着vld进行打拍，只需要保证在你使用的时候，它不是x态就行了。控制通路的信号控制系统的运行，出现x态，必然挂死。而数据通路只要保证在vld的有效，也就是我踩这个数据的时候它是正确的就行了，不管它是x态还是其他无效的数据。</p>
 <p>当然如果数据有作为判断逻辑用于控制，那这个数据一定要进行复位。</p>
-<p>代码示例，时序逻辑可以省略else，寄存器默认保持，组合逻辑必须写else。vld是一个脉冲这个数据踹一脚直接踹进这个寄存器存储，在下一脚来临之前，这个寄存器都将保持这个数据。</p>
+<p>代码示例，时序逻辑可以省略else，寄存器默认保持，组合逻辑必须写else。vld是一个脉冲将这个数据踹一脚直接踹进这个寄存器存储，在下一脚来临之前，这个寄存器都将保持这个数据。</p>
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk)<span class="keyword">begin</span></span><br><span class="line">  <span class="keyword">if</span>(data_vld)</span><br><span class="line">    dout[<span class="number">63</span>:<span class="number">0</span>] &lt;= din;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
+<h2 id="手动插入时钟门控"><a href="#手动插入时钟门控" class="headerlink" title="手动插入时钟门控"></a>手动插入时钟门控</h2><p>手动插入时钟门控，根据控制场景的不同自动关掉部分模块的时钟，留有软件的控制通道，由软件关闭。可以有效的减少动态功耗。</p>
+<p>举例，比如一块运算电路配置全开的时候需要四个相同的计算模块同时工作，最少的情况只需要一个模块工作，这时根据配置的不同可以将其他三个模块的时钟关掉，减少动态功耗。</p>
+<h2 id="整个Top模块掉电"><a href="#整个Top模块掉电" class="headerlink" title="整个Top模块掉电"></a>整个Top模块掉电</h2><p>整个二级Top模块掉电休眠，掉电后将所有需要保存的数据写到memory中，等下一次模块唤醒上电启动时再重新写回到硬件中。ASIC中的RAM可以自己生成是否需要掉电保存数据的功能，不需要的专门存储的RAM也一起掉电。</p>
+<p>需要使用和保存的数据寄存器较少，可以从模块伸出接口到顶层，让软件读走，等下一次模块唤醒上电启动时再通过软件配置寄存器配置回模块。这就是低功耗模式。</p>
+<h2 id="静态功耗和动态功耗"><a href="#静态功耗和动态功耗" class="headerlink" title="静态功耗和动态功耗"></a>静态功耗和动态功耗</h2><p>静态功耗只要电路供电就有，除非掉电休眠，否则无法避免，动态功耗只要存在高低电平切换就有。在rtl设计时，良好的代码风格也可以降低动态功耗，乘法器、加法器等运算单元，通过减少组合逻辑的翻转，从而达到降低动态功耗的效果。</p>
+<img src="https://cdn.jsdelivr.net/gh/NingHeChuan/MyBlog_Pic/pic/动态功耗.png" alt="动态功耗" style="zoom:50%;" />
 
-
-<h2 id="手动插入时钟门控"><a href="#手动插入时钟门控" class="headerlink" title="手动插入时钟门控"></a>手动插入时钟门控</h2><p>手动插入时钟门控，（门控的手动开关）门控留有软件的控制通道。</p>
-<h2 id="整个模块掉电"><a href="#整个模块掉电" class="headerlink" title="整个模块掉电"></a>整个模块掉电</h2><p>整个模块掉电，掉电后将所有需要保存的数据写到memory中，要注意有些数据后面可能还要用，需要使用和保存的寄存器较少，可以伸出接口，让软件读走，下一次模块上电启动时再配置回来。</p>
-<h2 id="静态功耗和动态功耗"><a href="#静态功耗和动态功耗" class="headerlink" title="静态功耗和动态功耗"></a>静态功耗和动态功耗</h2><p>乘法器、加法器等运算单元，组合逻辑是否存在无效翻转。静态功耗和动态功耗。</p>
-<p>输入到输出，组合逻辑的a端值不变，没有电平翻转，所以不会有动态功耗，只存在静态功耗。</p>
+<p>输入到输出，组合逻辑的a、b端值不变，没有电平翻转，所以不会有动态功耗，只存在静态功耗。在设计中考虑组合逻辑无效翻转问题，某段时间这部分数据无效，通过使能信号选择这部分逻辑保持，得到避免动态功耗的效果。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>本篇先记录这几点，更多、更详细的讨论，感谢大家的关注以及三连（分享、点赞、好看），我们下一篇再见。</p>
 
       
     </div>
@@ -690,7 +696,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Verilog实现低功耗设计？"><span class="nav-number">1.</span> <span class="nav-text">Verilog实现低功耗设计？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据通路寄存器打拍不加复位"><span class="nav-number">1.1.</span> <span class="nav-text">数据通路寄存器打拍不加复位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手动插入时钟门控"><span class="nav-number">1.2.</span> <span class="nav-text">手动插入时钟门控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整个模块掉电"><span class="nav-number">1.3.</span> <span class="nav-text">整个模块掉电</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态功耗和动态功耗"><span class="nav-number">1.4.</span> <span class="nav-text">静态功耗和动态功耗</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Verilog如何实现低功耗设计？"><span class="nav-number">1.</span> <span class="nav-text">Verilog如何实现低功耗设计？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据通路寄存器打拍不加复位"><span class="nav-number">1.1.</span> <span class="nav-text">数据通路寄存器打拍不加复位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手动插入时钟门控"><span class="nav-number">1.2.</span> <span class="nav-text">手动插入时钟门控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整个Top模块掉电"><span class="nav-number">1.3.</span> <span class="nav-text">整个Top模块掉电</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态功耗和动态功耗"><span class="nav-number">1.4.</span> <span class="nav-text">静态功耗和动态功耗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">1.5.</span> <span class="nav-text">最后</span></a></li></ol></li></ol></div>
             
 
           </div>
